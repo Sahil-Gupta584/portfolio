@@ -32,7 +32,7 @@ export default function Projects() {
       const data = await res.json();
 
       const filtered = data.items.filter(
-        (pr) =>
+        (pr: { repository_url: string | string[]; }) =>
           !pr.repository_url.includes("Sahil-Gupta584") &&
           !pr.repository_url.includes("AdarshHatkar")
       );

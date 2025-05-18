@@ -53,7 +53,7 @@ export default function Navbar() {
           <div>
             <a href="#hero" className="font-display text-xl font-semibold text-white group flex items-center">
               <span className="text-white">
-                John
+                Sahil
               </span>
               <span className="text-accent mx-0.5">.</span>
               <span className="text-primary/90 relative font-mono">

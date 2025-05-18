@@ -28,11 +28,11 @@ export default function MagneticWrapper({
     }
     const animateXPosition = gsap.quickTo(targetElement, "x", {
       duration: animationDuration,
-      ease: 'elastic.out(1, {elasticity})',
+      ease: `elastic.out(1, ${elasticity})`,
     });
     const animateYPosition = gsap.quickTo(targetElement, "y", {
       duration: animationDuration,
-      ease: 'elastic.out(1, {elasticity})',
+      ease: `elastic.out(1, ${elasticity})`,
     });
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -75,7 +75,6 @@ export default function MagneticWrapper({
   }, [animationDuration, elasticity]);
 
   return React.cloneElement(children, {
-    // @ts-expect-error works
     ref: magneticElementRef as RefObject<HTMLElement>,
   });
 }
