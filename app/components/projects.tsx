@@ -225,7 +225,7 @@ export default function Projects() {
                         href={pr.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block text-lg font-medium text-blue-300 hover:text-blue-100 hover:underline transition-colors line-clamp-2"
+                        className="block text-start text-lg font-medium text-blue-300 hover:text-blue-100 hover:underline transition-colors line-clamp-2"
                       >
                         {pr.title}
                       </a>
