@@ -5,6 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import twoFingers from "@/public/two-fingers.png";
 import MagneticWrapper from "./magneticWrapper";
+import { IoIosMail } from "react-icons/io";
 
 export default function Hero() {
   const [typedText, setTypedText] = useState("");
@@ -275,7 +276,7 @@ export default function Hero() {
               <span className="text-white/40 text-sm">Connect:</span>
               <div className="flex gap-3">
                 <a
-                  href="#"
+                  href="https://github.com/Sahil-Gupta584"
                   className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
                   aria-label="GitHub"
                 >
@@ -284,7 +285,7 @@ export default function Hero() {
                   </MagneticWrapper>
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/sahil-gupta-1b7742286"
                   className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
                   aria-label="LinkedIn"
                 >
@@ -293,12 +294,21 @@ export default function Hero() {
                   </MagneticWrapper>
                 </a>
                 <a
-                  href="#"
+                  href="https://x.com/sahil_builds"
                   className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
                   aria-label="Stack Overflow"
                 >
                   <MagneticWrapper>
                     <FaXTwitter />
+                  </MagneticWrapper>
+                </a>
+                <a
+                  href="mailto:guptas3067@gmail.com"
+                  className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
+                  aria-label="Stack Overflow"
+                >
+                  <MagneticWrapper>
+<IoIosMail />
                   </MagneticWrapper>
                 </a>
               </div>
