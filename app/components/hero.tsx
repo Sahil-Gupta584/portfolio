@@ -117,9 +117,6 @@ export default function Hero() {
         id="me"
         className="min-h-screen flex items-center justify-center pt-20 pb-16 px-6 relative bg-grid animated-gradient overflow-hidden"
       >
-        {/* Background dots */}
-        {/* <div className="dots-overlay absolute inset-0 z-0 opacity-20"></div> */}
-
         {/* Animated meteors */}
         {meteors.map((meteor, i) => (
           <motion.div
@@ -150,9 +147,6 @@ export default function Hero() {
             }}
           />
         ))}
-
-        {/* Floating particles */}
-        {/* <div className="particles-container absolute inset-0 z-0"></div> */}
 
         <div className="flex  items-center justify-between">
           <motion.div
@@ -254,7 +248,7 @@ export default function Hero() {
               transition={{ delay: 0.6, duration: 0.6 }}
             >
               <a
-                href="#contact"
+                href="https://x.com/sahil_builds"
                 className="px-5 py-2.5 bg-primary text-white rounded-md hover:bg-primary/90 transition-all"
               >
                 Get In Touch
