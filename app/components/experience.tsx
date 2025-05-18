@@ -8,7 +8,7 @@ const experiences = [
     role: "Full Stack Developer",
     duration: "6 Months",
     description:
-      "Delivered scalable web solutions for clients. Built custom dashboards, authentication flows, and real-time chat features.",
+      "Delivered 5+ solutions for clients. Completed personal Hospital system, School, Admin Panels in scalable manner with great user interface.",
     techStack: ["Node.js", "Prisma", "trpc", "Vite", "mySQL"],
   },
 ];
@@ -36,7 +36,7 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-20 px-6 bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white min-h-screen"
+      className="py-20 px-6 bg-[#0d1117] min-h-screen"
     >
       <div className="max-w-5xl mx-auto">
         <motion.h2

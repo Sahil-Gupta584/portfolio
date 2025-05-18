@@ -118,7 +118,7 @@ export default function Hero() {
         className="min-h-screen flex items-center justify-center pt-20 pb-16 px-6 relative bg-grid animated-gradient overflow-hidden"
       >
         {/* Background dots */}
-        <div className="dots-overlay absolute inset-0 z-0 opacity-20"></div>
+        {/* <div className="dots-overlay absolute inset-0 z-0 opacity-20"></div> */}
 
         {/* Animated meteors */}
         {meteors.map((meteor, i) => (
@@ -152,7 +152,7 @@ export default function Hero() {
         ))}
 
         {/* Floating particles */}
-        <div className="particles-container absolute inset-0 z-0"></div>
+        {/* <div className="particles-container absolute inset-0 z-0"></div> */}
 
         <div className="flex  items-center justify-between">
           <motion.div
@@ -248,7 +248,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              className="flex flex-wrap gap-4 sm:justify-start justify-center"
+              className="flex flex-wrap gap-4 sm:justify-start justify-center z-50"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
@@ -280,19 +280,19 @@ export default function Hero() {
                   className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
                   aria-label="GitHub"
                 >
-                  <MagneticWrapper>
-                    <FaGithub />
+                  <MagneticWrapper elasticity={10}>
+                    <FaGithub className="text-2xl size-[24px]"/>
                   </MagneticWrapper>
                 </a>
+                <MagneticWrapper>
                 <a
                   href="https://www.linkedin.com/in/sahil-gupta-1b7742286"
                   className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
                   aria-label="LinkedIn"
                 >
-                  <MagneticWrapper>
                     <FaLinkedin />
-                  </MagneticWrapper>
                 </a>
+                  </MagneticWrapper>
                 <a
                   href="https://x.com/sahil_builds"
                   className="w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all"
@@ -308,14 +308,13 @@ export default function Hero() {
                   aria-label="Stack Overflow"
                 >
                   <MagneticWrapper>
-<IoIosMail />
+                    <IoIosMail />
                   </MagneticWrapper>
                 </a>
               </div>
             </motion.div>
           </motion.div>
         </div>
-
       </section>
     </>
   );

@@ -67,8 +67,8 @@
 }
 
 .bg-grid::before {
-  top: 60%;
-  left: 60%;
+ top: 33%;
+    left: 42%;
   background: rgba(56, 182, 255, 0.03);
   animation: float 12s infinite alternate-reverse ease-in-out;
 }

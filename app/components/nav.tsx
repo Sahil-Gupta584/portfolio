@@ -82,7 +82,7 @@ export default function Navbar() {
                   href="#me" 
                   className="px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition-colors text-sm"
                 >
-                  Connect
+                  Connect me
                 </a>
               </li>
             </ul>
