@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useScrollActive } from "../hooks/useScrollActive";
 import { motion } from "framer-motion";
-import { TiThMenu } from "react-icons/ti";
 import { IoMenu } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 
