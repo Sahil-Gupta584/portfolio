@@ -16,6 +16,28 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sahil Gupta- Full stack Developer",
   description: "I am Full stack developer building scalable web solutions",
+   openGraph: {
+    title: 'Sahil Supta',
+    description: 'Full Stack Developer ',
+    url: 'https://sahil-alpha.vercel.app/',
+    siteName: 'Sahil Gupta',
+    images: [
+      {
+        url: 'https://sahil-alpha.vercel.app/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Sahil Gupta',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sahil Gupta',
+    description: 'Full stack Developer',
+    images: ['https://sahil-alpha.vercel.app/opengraph-image.png'],
+  },
 };
 
 export default function RootLayout({
