@@ -33,7 +33,7 @@ export default function Projects() {
   const projects = [
     {
       title: "Conceptify",
-      category: "Backend",
+      category: "Full Stack",
       description:
         "Conceptify is a tool for students where they can generate generate visual diagrams of their notes, ask concepts, short explanation. ",
       image: conceptify.src,
@@ -43,7 +43,7 @@ export default function Projects() {
     },
     {
       title: "Pdfkit",
-      category: "Backend",
+      category: "API",
       description:
         "Pdfkit is onestop solution for all of your document related works. ",
       image: pdfkit.src,
