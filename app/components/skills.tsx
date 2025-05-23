@@ -118,10 +118,6 @@ export default function Skills() {
                   "GitHub Actions",
                   "Serverless",
                   "ESLint",
-                  "AWS S3",
-                  "AWS EC2",
-                  "AWS CloudFront",
-                  "Azure VM",
                   "Docker",
                 ].map((tool, i) => (
                   <span key={i}>
