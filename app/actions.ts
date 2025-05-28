@@ -20,7 +20,8 @@ export async function getPrs() {
     const filtered = data.items.filter(
       (pr: { repository_url: string | string[] }) =>
         !pr.repository_url.includes("Sahil-Gupta584") &&
-        !pr.repository_url.includes("AdarshHatkar")
+        !pr.repository_url.includes("AdarshHatkar") &&
+        !pr.repository_url.includes("Beyinc") 
     );
 
     const results = [];
