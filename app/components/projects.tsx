@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import conceptify from "@/public/conceptify.png";
+import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
 import { Tab, Tabs } from "@heroui/react";
 import { useEffect, useState } from "react";
@@ -38,7 +39,7 @@ export default function Projects() {
         "Conceptify is a tool for students where they can generate generate visual diagrams of their notes, ask concepts, short explanation. ",
       image: conceptify.src,
       technologies: ["Node.js", "Next.js", "MongoDB", "API"],
-      githubUrl: "#",
+      githubUrl: "https://github.com/Sahil-Gupta584/Conceptify",
       liveUrl: "https://conceptify-kappa.vercel.app",
     },
     {
@@ -48,8 +49,18 @@ export default function Projects() {
         "Pdfkit is onestop solution for all of your document related works. ",
       image: pdfkit.src,
       technologies: ["ILovePdf API", "Next.js"],
-      githubUrl: "#",
+      githubUrl: "https://github.com/Sahil-Gupta584/pdfkit",
       liveUrl: "https://pdfkit.vercel.app/",
+    },
+    {
+      title: "Booksmall",
+      category: "Marketplace",
+      description:
+        "Booksmall is marketplace for reader enthusiast where they can buy,read, sell and reapeat quickly with cutting new books cost. ",
+      image: booksmall.src,
+      technologies: ["Mongo,tRPC"],
+      githubUrl: "https://github.com/Sahil-Gupta584/BooksMall",
+      liveUrl: "https://books-mall.vercel.app",
     },
   ];
 
