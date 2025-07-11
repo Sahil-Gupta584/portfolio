@@ -215,7 +215,7 @@ export default function Projects() {
                 </div>
               )}
               {prsStatus === "error" && (
-                <p className="text-red-400">Failed to fetch pr's</p>
+                <p className="text-red-400">Failed to fetch pr&apos;s</p>
               )}
             </Tab>
           </Tabs>
