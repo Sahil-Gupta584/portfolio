@@ -15,20 +15,24 @@ type Tpr = {
   repo_owner: string;
 };
 export default function Projects() {
+  const [prsStatus, setPrsStatus] = useState<"loading" | "error" | "fetched">(
+    "loading"
+  );
   const [prs, setPrs] = useState<Tpr[] | null>(null);
 
   useEffect(() => {
- 
-    getPrs().then(data=>{
-      if(data.ok && data.results) {
-        setPrs(data.results)
-        return
+    (async () => {
+      const data = await getPrs();
+
+      if (data.ok && data.results) {
+        console.log({ data });
+
+        setPrsStatus("fetched");
+        setPrs(data.results);
+      } else {
+        setPrsStatus("error");
       }
-
-      console.log('Failed to get prs at:',Date.now());
-      
-    })
-
+    })();
   }, []);
 
   const projects = [
@@ -58,7 +62,7 @@ export default function Projects() {
       description:
         "Booksmall is marketplace for reader enthusiast where they can buy,read, sell and reapeat quickly with cutting new books cost. ",
       image: booksmall.src,
-      technologies: ["Mongo,tRPC"],
+      technologies: ["Mongo", "tRPC", "Websocket"],
       githubUrl: "https://github.com/Sahil-Gupta584/BooksMall",
       liveUrl: "https://books-mall.vercel.app",
     },
@@ -209,6 +213,9 @@ export default function Projects() {
                 <div className="text-gray-300 text-center py-10">
                   Loading...
                 </div>
+              )}
+              {prsStatus === "error" && (
+                <p className="text-red-400">Failed to fetch pr's</p>
               )}
             </Tab>
           </Tabs>

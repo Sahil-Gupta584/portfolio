@@ -84,7 +84,7 @@ export default function Skills() {
                   "Tanstack",
                   "Langchain",
                   "Langraph",
-                  "SocketIO",
+                  "Websocket",
                   "Puppeteer",
                 ].map((lib, i) => (
                   <span key={i}>
@@ -114,22 +114,21 @@ export default function Skills() {
                 <span className="text-[#569CD6]">const</span>
                 <span className="text-[#9CDCFE]">Tools &amp; Platforms</span>
                 <span className="text-white">=</span>
-                {[
-                  "GitHub Actions",
-                  "Serverless",
-                  "ESLint",
-                  "Docker",
-                ].map((tool, i) => (
-                  <span key={i}>
-                    <span className="text-[#DCDCAA]">{tool}</span>
-                    {i < 7 && <span className="text-white">,</span>}
-                  </span>
-                ))}
+                {["GitHub Actions", "Serverless", "Docker", "AWS"].map(
+                  (tool, i) => (
+                    <span key={i}>
+                      <span className="text-[#DCDCAA]">{tool}</span>
+                      {i < 7 && <span className="text-white">,</span>}
+                    </span>
+                  )
+                )}
               </div>
             </div>
             <div className="text-sm sm:text-base">
               <p className="text-green-400 mt-6">{"//"} Start Connection</p>
-              <p className="text-white">skills.listen(guptas3067@gmail.com);</p>
+              <p className="text-white">
+                <span className="text-[#9CDCFE]">skills</span>.listen(guptas3067@gmail.com);
+              </p>
             </div>
           </div>
 

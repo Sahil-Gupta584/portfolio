@@ -1,27 +1,39 @@
-'use server';
+"use server";
 
 export async function getPrs() {
   try {
     const username = "Sahil-Gupta584";
     const token = process.env.GITHUB_TOKEN;
-    console.log("token", token);
 
-    const res = await fetch(
-      `https://api.github.com/search/issues?q=is:pr+author:${username}`,
-      {
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-          ...(token && { Authorization: `token ${token}` }),
-        },
+    const allItems = [];
+    let page = 1;
+    let hasMore = true;
+
+    while (hasMore) {
+      const res = await fetch(
+        `https://api.github.com/search/issues?q=is:pr+author:${username}&per_page=100&page=${page}`,
+        {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            ...(token && { Authorization: `token ${token}` }),
+          },
+        }
+      );
+
+      const data = await res.json();
+      if (!data.items || data.items.length === 0) {
+        hasMore = false;
+      } else {
+        allItems.push(...data.items);
+        page++;
       }
-    );
-    const data = await res.json();
+    }
 
-    const filtered = data.items.filter(
+    const filtered = allItems.filter(
       (pr: { repository_url: string | string[] }) =>
         !pr.repository_url.includes("Sahil-Gupta584") &&
         !pr.repository_url.includes("AdarshHatkar") &&
-        !pr.repository_url.includes("Beyinc") 
+        !pr.repository_url.includes("Beyinc")
     );
 
     const results = [];
@@ -50,7 +62,7 @@ export async function getPrs() {
     }
     return { ok: true, results };
   } catch (error) {
-      console.log('Failed to get prs at:',Date.now());
+    console.log("Failed to get prs at:", Date.now());
     console.log("error in getPrs", error);
     return { ok: false };
   }
