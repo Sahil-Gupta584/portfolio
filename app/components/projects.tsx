@@ -44,7 +44,7 @@ export default function Projects() {
       image: conceptify.src,
       technologies: ["Node.js", "Next.js", "MongoDB", "API"],
       githubUrl: "https://github.com/Sahil-Gupta584/Conceptify",
-      liveUrl: "https://conceptify-kappa.vercel.app",
+      liveUrl: "https://conceptify-kappa.vercel.app/landing",
     },
     {
       title: "Pdfkit",
