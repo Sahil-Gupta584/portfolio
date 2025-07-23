@@ -65,6 +65,15 @@ export default function Projects() {
       technologies: ["Mongo", "tRPC", "Websocket"],
       githubUrl: "https://github.com/Sahil-Gupta584/BooksMall",
       liveUrl: "https://books-mall.vercel.app",
+    },    {
+      title: "Syncmate",
+      category: "SaaS",
+      description:
+        "Syncmate is onestop solution for content creators to manage there multiple youtube channels, video files and editors. ",
+      image: booksmall.src,
+      technologies: ["Postgres", "tRPC", "Aws","Docker"],
+      githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
+      liveUrl: "https://syncmate.xyz",
     },
   ];
 
