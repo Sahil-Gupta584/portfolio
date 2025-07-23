@@ -3,6 +3,8 @@ import conceptify from "@/public/conceptify.png";
 import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
 import { Tab, Tabs } from "@heroui/react";
+import syncmate from "@/public/syncmate.jpeg";
+import racle from "@/public/racle.jpeg";
 import { useEffect, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { getPrs } from "../actions";
@@ -70,10 +72,19 @@ export default function Projects() {
       category: "SaaS",
       description:
         "Syncmate is onestop solution for content creators to manage there multiple youtube channels, video files and editors. ",
-      image: booksmall.src,
+      image: syncmate.src,
       technologies: ["Postgres", "tRPC", "Aws","Docker"],
       githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
       liveUrl: "https://syncmate.xyz",
+    },    {
+      title: "Racle",
+      category: "Backend",
+      description:
+        "Racke is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
+      image: racle.src,
+      technologies: [ "tRPC", "Postgres","Cloudflare"],
+      githubUrl: "https://github.com/Sahil-Gupta584/racke",
+      liveUrl: "https://racle.xyz",
     },
   ];
 
