@@ -4,7 +4,7 @@ import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
 import { Tab, Tabs } from "@heroui/react";
 import syncmate from "@/public/syncmate.jpeg";
-// import racle from "@/public/racle.jpeg";
+import racle from "@/public/racle.jpeg";
 import { useEffect, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { getPrs } from "../actions";
@@ -21,11 +21,11 @@ export default function Projects() {
     "loading"
   );
   const [prs, setPrs] = useState<Tpr[] | null>(null);
-
+  
   useEffect(() => {
     (async () => {
       const data = await getPrs();
-
+      
       if (data.ok && data.results) {
         console.log({ data });
 
@@ -36,8 +36,28 @@ export default function Projects() {
       }
     })();
   }, []);
-
+  
   const projects = [
+    {
+    title: "Syncmate",
+    category: "SaaS",
+    description:
+      "Syncmate is onestop solution for content creators to manage there multiple youtube channels, video files and editors. ",
+    image: syncmate.src,
+    technologies: ["Postgres", "tRPC", "Aws","Docker"],
+    githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
+    liveUrl: "https://syncmate.xyz",
+    },    
+    {
+      title: "Racle",
+      category: "Backend",
+      description:
+        "Racke is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
+      image: racle.src,
+      technologies: [ "tRPC", "Postgres","Cloudflare"],
+      githubUrl: "https://github.com/Sahil-Gupta584/racke",
+      liveUrl: "https://racle-web.vercel.app",
+    },
     {
       title: "Conceptify",
       category: "Full Stack",
@@ -67,26 +87,7 @@ export default function Projects() {
       technologies: ["Mongo", "tRPC", "Websocket"],
       githubUrl: "https://github.com/Sahil-Gupta584/BooksMall",
       liveUrl: "https://books-mall.vercel.app",
-    },    {
-      title: "Syncmate",
-      category: "SaaS",
-      description:
-        "Syncmate is onestop solution for content creators to manage there multiple youtube channels, video files and editors. ",
-      image: syncmate.src,
-      technologies: ["Postgres", "tRPC", "Aws","Docker"],
-      githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
-      liveUrl: "https://syncmate.xyz",
-    },    
-//{
-    //   title: "Racle",
-    //   category: "Backend",
-    //   description:
-    //     "Racke is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
-    //   image: racle.src,
-    //   technologies: [ "tRPC", "Postgres","Cloudflare"],
-    //   githubUrl: "https://github.com/Sahil-Gupta584/racke",
-    //   liveUrl: "https://racle.xyz",
-    // },
+    },  
   ];
 
   const containerVariants = {
