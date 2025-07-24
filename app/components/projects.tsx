@@ -76,16 +76,17 @@ export default function Projects() {
       technologies: ["Postgres", "tRPC", "Aws","Docker"],
       githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
       liveUrl: "https://syncmate.xyz",
-    },    {
-      title: "Racle",
-      category: "Backend",
-      description:
-        "Racke is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
-      image: racle.src,
-      technologies: [ "tRPC", "Postgres","Cloudflare"],
-      githubUrl: "https://github.com/Sahil-Gupta584/racke",
-      liveUrl: "https://racle.xyz",
-    },
+    },    
+//{
+    //   title: "Racle",
+    //   category: "Backend",
+    //   description:
+    //     "Racke is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
+    //   image: racle.src,
+    //   technologies: [ "tRPC", "Postgres","Cloudflare"],
+    //   githubUrl: "https://github.com/Sahil-Gupta584/racke",
+    //   liveUrl: "https://racle.xyz",
+    // },
   ];
 
   const containerVariants = {
