@@ -4,7 +4,7 @@ import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
 import { Tab, Tabs } from "@heroui/react";
 import syncmate from "@/public/syncmate.jpeg";
-import racle from "@/public/racle.jpeg";
+// import racle from "@/public/racle.jpeg";
 import { useEffect, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { getPrs } from "../actions";
