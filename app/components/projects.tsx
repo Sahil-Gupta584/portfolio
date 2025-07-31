@@ -56,7 +56,7 @@ export default function Projects() {
       image: racle.src,
       technologies: [ "tRPC", "Postgres","Cloudflare"],
       githubUrl: "https://github.com/Sahil-Gupta584/racke",
-      liveUrl: "https://racle-web.vercel.app",
+      liveUrl: "https://racle.xyz",
     },
     {
       title: "Conceptify",
