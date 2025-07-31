@@ -127,7 +127,7 @@ export default function Skills() {
             <div className="text-sm sm:text-base">
               <p className="text-green-400 mt-6">{"//"} Start Connection</p>
               <p className="text-white">
-                <span className="text-[#9CDCFE]">skills</span>.listen(guptas3067@gmail.com);
+                <span className="text-[#CE9178]">skills</span>.listen(guptas3067@gmail.com);
               </p>
             </div>
           </div>
