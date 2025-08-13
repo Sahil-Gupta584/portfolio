@@ -15,12 +15,14 @@ export async function getPrs() {
         {
           headers: {
             Accept: "application/vnd.github.v3+json",
-            ...(token && { Authorization: `token ${token}` }),
+            ...(token && { Authorization: `token ${'token'}` }),
           },
         }
       );
-
+      
       const data = await res.json();
+      console.log({data});
+      
       if (!data.items || data.items.length === 0) {
         hasMore = false;
       } else {
