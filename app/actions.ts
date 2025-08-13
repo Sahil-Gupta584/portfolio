@@ -34,6 +34,7 @@ export async function getPrs() {
       (pr: { repository_url: string | string[] }) =>
         !pr.repository_url.includes("Sahil-Gupta584") &&
         !pr.repository_url.includes("AdarshHatkar") &&
+        !pr.repository_url.includes("syncly-io") &&
         !pr.repository_url.includes("Beyinc")
     );
 
