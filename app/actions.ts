@@ -3,7 +3,7 @@
 export async function getPrs() {
   try {
     const username = "Sahil-Gupta584";
-    const token = process.env.GITHUB_TOKEN;
+    const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 
     const allItems = [];
     let page = 1;
@@ -31,7 +31,7 @@ export async function getPrs() {
     }
 
     const filtered = allItems.filter(
-      (pr: { repository_url: string | string[] }) =>
+      (pr: { repository_url: string  }) =>
         !pr.repository_url.includes("Sahil-Gupta584") &&
         !pr.repository_url.includes("AdarshHatkar") &&
         !pr.repository_url.includes("syncly-io") &&
