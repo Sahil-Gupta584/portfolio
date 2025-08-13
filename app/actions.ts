@@ -8,21 +8,21 @@ export async function getPrs() {
     const allItems = [];
     let page = 1;
     let hasMore = true;
-
+    console.log('NEXT_PUBLIC_GITHUB_TOKEN', process.env.NEXT_PUBLIC_GITHUB_TOKEN)
     while (hasMore) {
       const res = await fetch(
         `https://api.github.com/search/issues?q=is:pr+author:${username}&per_page=100&page=${page}`,
         {
           headers: {
             Accept: "application/vnd.github.v3+json",
-            ...(token && { Authorization: `token ${'token'}` }),
+            ...(token && { Authorization: `token ${token}` }),
           },
         }
       );
-      
+
       const data = await res.json();
-      console.log({data});
-      
+      console.log({ data });
+
       if (!data.items || data.items.length === 0) {
         hasMore = false;
       } else {
