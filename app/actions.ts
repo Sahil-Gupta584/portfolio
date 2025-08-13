@@ -21,7 +21,6 @@ export async function getPrs() {
       );
 
       const data = await res.json();
-      console.log({ data });
 
       if (!data.items || data.items.length === 0) {
         hasMore = false;

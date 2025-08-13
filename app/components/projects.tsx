@@ -34,6 +34,7 @@ export default function Projects() {
       } else {
         setPrsStatus("error");
       }
+
     })();
   }, []);
 
@@ -54,7 +55,7 @@ export default function Projects() {
       description:
         "Racle is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
       image: racle.src,
-      technologies: ["tRPC", "Postgres", "Cloudflare","Docker"],
+      technologies: ["tRPC", "Postgres", "Cloudflare", "Docker"],
       githubUrl: "https://github.com/Sahil-Gupta584/racke",
       liveUrl: "https://racle.xyz",
     },
@@ -207,13 +208,12 @@ export default function Projects() {
                             {pr.repo_owner}
                           </p>
                           <p
-                            className={`w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${
-                              pr.status === "Open"
+                            className={`w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${pr.status === "Open"
                                 ? "bg-yellow-500/20 text-yellow-400"
                                 : pr.status === "merged"
-                                ? "bg-green-500/20 text-green-400"
-                                : "bg-gray-500/20 text-gray-400"
-                            }`}
+                                  ? "bg-green-500/20 text-green-400"
+                                  : "bg-gray-500/20 text-gray-400"
+                              }`}
                           >
                             {pr.status === "Open" ? "🟡 Open" : "✅ Merged"}
                           </p>
