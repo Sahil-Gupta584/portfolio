@@ -8,7 +8,10 @@ export async function getPrs() {
     const allItems = [];
     let page = 1;
     let hasMore = true;
-    console.log('NEXT_PUBLIC_GITHUB_TOKEN', process.env.NEXT_PUBLIC_GITHUB_TOKEN)
+    console.log(
+      "NEXT_PUBLIC_GITHUB_TOKEN",
+      process.env.NEXT_PUBLIC_GITHUB_TOKEN
+    );
     while (hasMore) {
       const res = await fetch(
         `https://api.github.com/search/issues?q=is:pr+author:${username}&per_page=100&page=${page}`,
@@ -31,7 +34,7 @@ export async function getPrs() {
     }
 
     const filtered = allItems.filter(
-      (pr: { repository_url: string  }) =>
+      (pr: { repository_url: string }) =>
         !pr.repository_url.includes("Sahil-Gupta584") &&
         !pr.repository_url.includes("AdarshHatkar") &&
         !pr.repository_url.includes("syncly-io") &&
@@ -51,12 +54,13 @@ export async function getPrs() {
 
       const isOpen = pr.state === "open";
       const isMerged = !!prDetails.merged_at;
+      const isClosed = pr.state === "closed" && !isMerged;
 
-      if (isOpen || isMerged) {
+      if (isOpen || isMerged || isClosed) {
         results.push({
           title: pr.title,
           html_url: pr.html_url,
-          status: isOpen ? "Open" : "Merged",
+          status: isOpen ? "Open" : isMerged ? "Merged" : "Closed",
           avatar_url: prDetails.base.user.avatar_url,
           repo_owner: prDetails.base.repo.owner.login,
         });
