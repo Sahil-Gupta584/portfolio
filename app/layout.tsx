@@ -17,27 +17,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sahil Gupta- Full stack Developer",
   description: "I am Full stack developer building scalable web solutions",
-   openGraph: {
-    title: 'Sahil Supta',
-    description: 'Full Stack Developer ',
-    url: 'https://sahil-alpha.vercel.app/',
-    siteName: 'Sahil Gupta',
+  openGraph: {
+    title: "Sahil Supta",
+    description: "Full Stack Developer ",
+    url: "https://sahil-alpha.vercel.app/",
+    siteName: "Sahil Gupta",
     images: [
       {
-        url: 'https://sahil-alpha.vercel.app/opengraph-image.png',
+        url: "https://sahil-alpha.vercel.app/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: 'Sahil Gupta',
+        alt: "Sahil Gupta",
       },
     ],
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Sahil Gupta',
-    description: 'Full stack Developer',
-    images: ['https://sahil-alpha.vercel.app/opengraph-image.png'],
+    card: "summary_large_image",
+    title: "Sahil Gupta",
+    description: "Full stack Developer",
+    images: ["https://sahil-alpha.vercel.app/opengraph-image.png"],
   },
 };
 
@@ -48,11 +48,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
+      <head>
+        <script
+          defer
+          data-website-id="68b2b53e2a27f4324ee0b55a"
+          data-domain="sahil.appwrite.network"
+          src="https://datafa.st/js/script.js"
+        ></script>
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar/>
+        <Navbar />
         {children}
-                <Analytics />
-
+        <Analytics />
       </body>
     </html>
   );
