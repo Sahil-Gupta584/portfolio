@@ -55,6 +55,12 @@ export default function RootLayout({
           data-domain="sahil.appwrite.network"
           src="https://datafa.st/js/script.js"
         ></script>
+        <script
+  defer
+  data-website-id="68b3319ddd137064fa17fc36"
+  data-domain="sahil-alpha.vercel.app"
+  src="https://datafa.st/js/script.js">
+</script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Navbar />
