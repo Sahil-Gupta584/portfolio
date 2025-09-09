@@ -219,7 +219,7 @@ export default function Hero() {
                   <span className="text-primary/70 mx-2 hidden sm:inline">
                     •
                   </span>
-                  <span className="text-primary/90 inline-block">
+                  <span className="text-primary inline-block">
                     <span className="terminal-cursor">{typedText}</span>
                     <span className={showCursor ? "opacity-100" : "opacity-0"}>
                       |
