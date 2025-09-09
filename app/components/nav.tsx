@@ -56,7 +56,7 @@ export default function Navbar() {
                 Sahil
               </span>
               <span className="text-accent mx-0.5">.</span>
-              <span className="text-primary/90 relative font-mono">
+              <span className="text-primary relative font-mono">
                 Code
                 <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary/60 group-hover:w-full transition-all duration-300"></span>
               </span>
