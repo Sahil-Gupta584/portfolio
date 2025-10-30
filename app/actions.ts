@@ -5,71 +5,83 @@ export async function getPrs() {
     const username = "Sahil-Gupta584";
     const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 
-    const allItems = [];
-    let page = 1;
-    let hasMore = true;
-    console.log(
-      "NEXT_PUBLIC_GITHUB_TOKEN",
-      process.env.NEXT_PUBLIC_GITHUB_TOKEN
-    );
-    while (hasMore) {
-      const res = await fetch(
-        `https://api.github.com/search/issues?q=is:pr+author:${username}&per_page=100&page=${page}`,
-        {
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-            ...(token && { Authorization: `token ${token}` }),
-          },
+    if (!token) throw new Error("GitHub token missing");
+
+    const query = `
+      query($username: String!, $after: String) {
+        user(login: $username) {
+          pullRequests(first: 100, after: $after, orderBy: {field: CREATED_AT, direction: DESC}) {
+            nodes {
+              title
+              url
+              state
+              merged
+              repository {
+                name
+                owner {
+                  login
+                  avatarUrl
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+          }
         }
-      );
-
-      const data = await res.json();
-
-      if (!data.items || data.items.length === 0) {
-        hasMore = false;
-      } else {
-        allItems.push(...data.items);
-        page++;
       }
-    }
+    `;
 
-    const filtered = allItems.filter(
-      (pr: { repository_url: string }) =>
-        !pr.repository_url.includes("Sahil-Gupta584") &&
-        !pr.repository_url.includes("AdarshHatkar") &&
-        !pr.repository_url.includes("syncly-io") &&
-        !pr.repository_url.includes("Beyinc")
-    );
-
+    let hasNextPage = true;
+    let cursor = null;
     const results = [];
 
-    for (const pr of filtered) {
-      const prRes = await fetch(pr.pull_request.url, {
+    while (hasNextPage) {
+      const res = await fetch("https://api.github.com/graphql", {
+        method: "POST",
         headers: {
-          Accept: "application/vnd.github.v3+json",
-          ...(token && { Authorization: `token ${token}` }),
+          Authorization: `bearer ${token}`,
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          query,
+          variables: { username, after: cursor },
+        }),
       });
-      const prDetails = await prRes.json();
 
-      const isOpen = pr.state === "open";
-      const isMerged = !!prDetails.merged_at;
-      const isClosed = pr.state === "closed" && !isMerged;
+      const { data } = await res.json();
+      const prData = data.user.pullRequests;
 
-      if (isOpen || isMerged || isClosed) {
+      const filtered = prData.nodes.filter(
+        (pr: any) =>
+          !["Sahil-Gupta584", "AdarshHatkar", "syncly-io", "Beyinc"].some((name) =>
+            pr.repository.owner.login.includes(name)
+          )
+      );
+
+      for (const pr of filtered) {
         results.push({
           title: pr.title,
-          html_url: pr.html_url,
-          status: isOpen ? "Open" : isMerged ? "Merged" : "Closed",
-          avatar_url: prDetails.base.user.avatar_url,
-          repo_owner: prDetails.base.repo.owner.login,
+          html_url: pr.url,
+          status:
+            pr.state === "OPEN"
+              ? "Open"
+              : pr.merged
+              ? "Merged"
+              : "Closed",
+          avatar_url: pr.repository.owner.avatarUrl,
+          repo_owner: pr.repository.owner.login,
         });
       }
+
+      hasNextPage = prData.pageInfo.hasNextPage;
+      cursor = prData.pageInfo.endCursor;
     }
+
     return { ok: true, results };
   } catch (error) {
-    console.log("Failed to get prs at:", Date.now());
-    console.log("error in getPrs", error);
+    console.error("Error fetching PRs:", error);
     return { ok: false };
   }
 }
