@@ -9,6 +9,13 @@ import { useEffect, useState, useMemo } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { getPrs, type Tpr } from "../actions";
 
+const statuses = [
+  { id: "all", name: "All Statuses" },
+  { id: "Open", name: "🟡 Open" },
+  { id: "Merged", name: "✅ Merged" },
+  { id: "Closed", name: "🔒 Closed" },
+];
+
 export default function Projects() {
   const [prsStatus, setPrsStatus] = useState<"loading" | "error" | "fetched">(
     "loading"
@@ -52,17 +59,11 @@ export default function Projects() {
     if (!prs) return [];
     return prs.filter((pr) => {
       const statusMatch = statusFilter === "all" || pr.status === statusFilter;
-      const ownerMatch = ownerFilter === "all" || pr.repo_owner === ownerFilter;
+      // Case-insensitive matching for robustness
+      const ownerMatch = ownerFilter === "all" || pr.repo_owner.toLowerCase() === ownerFilter.toLowerCase();
       return statusMatch && ownerMatch;
     });
   }, [prs, statusFilter, ownerFilter]);
-
-  const statuses = [
-    { id: "Open", name: "🟡 Open" },
-    { id: "Merged", name: "✅ Merged" },
-    { id: "Closed", name: "🔒 Closed" },
-    { id: "all", name: "All Statuses" },
-  ];
 
   const projects = [
     {
@@ -217,6 +218,7 @@ export default function Projects() {
                   placeholder="All Statuses"
                   variant="bordered"
                   selectedKeys={new Set([statusFilter])}
+                  disallowEmptySelection
                   onSelectionChange={(keys) => {
                     const val = Array.from(keys)[0] as string;
                     setStatusFilter(val || "all");
@@ -242,6 +244,7 @@ export default function Projects() {
                   variant="bordered"
                   items={owners}
                   selectedKeys={new Set([ownerFilter])}
+                  disallowEmptySelection
                   onSelectionChange={(keys) => {
                     const val = Array.from(keys)[0] as string;
                     setOwnerFilter(val || "all");
@@ -278,57 +281,64 @@ export default function Projects() {
               </div>
 
               {prs ? (
-                <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                  variants={containerVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
-                  {filteredPrs.map((pr, index) => (
-                    <motion.div
-                      key={index}
-                      className="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 shadow-lg hover:shadow-2xl hover:border-blue-500/40 transition-all duration-300 transform hover:-translate-y-1"
-                      variants={itemVariants}
-                    >
-                      <div className="flex items-center mb-4">
-                        <img
-                          src={pr.avatar_url}
-                          alt={pr.repo_owner}
-                          className="w-12 h-12 rounded-full mr-4 border border-gray-600 shadow-md"
-                        />
-                        <div>
-                          <p className="font-semibold text-white">
-                            {pr.repo_owner}
-                          </p>
-                          <p
-                            className={`uppercase w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${pr.status === "Open"
-                              ? "bg-yellow-500/20 text-yellow-400"
-                              : pr.status === "Merged"
-                                ? "bg-green-500/20 text-green-400"
-                                : "bg-gray-500/20 text-gray-400"
-                              }`}
-                          >
-                            {pr.status === "Open"
-                              ? "🟡 Open"
-                              : pr.status === "Merged"
-                                ? "✅ Merged"
-                                : "🔒 Closed"}
-                          </p>
-                        </div>
-                      </div>
-
-                      <a
-                        href={pr.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block text-start text-lg font-medium text-blue-300 hover:text-blue-100 hover:underline transition-colors line-clamp-2"
+                filteredPrs.length > 0 ? (
+                  <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                  >
+                    {filteredPrs.map((pr, index) => (
+                      <motion.div
+                        key={index}
+                        className="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 shadow-lg hover:shadow-2xl hover:border-blue-500/40 transition-all duration-300 transform hover:-translate-y-1"
+                        variants={itemVariants}
                       >
-                        {pr.title}
-                      </a>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                        <div className="flex items-center mb-4">
+                          <img
+                            src={pr.avatar_url}
+                            alt={pr.repo_owner}
+                            className="w-12 h-12 rounded-full mr-4 border border-gray-600 shadow-md"
+                          />
+                          <div>
+                            <p className="font-semibold text-white">
+                              {pr.repo_owner}
+                            </p>
+                            <p
+                              className={`uppercase w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${pr.status === "Open"
+                                ? "bg-yellow-500/20 text-yellow-400"
+                                : pr.status === "Merged"
+                                  ? "bg-green-500/20 text-green-400"
+                                  : "bg-gray-500/20 text-gray-400"
+                                }`}
+                            >
+                              {pr.status === "Open"
+                                ? "🟡 Open"
+                                : pr.status === "Merged"
+                                  ? "✅ Merged"
+                                  : "🔒 Closed"}
+                            </p>
+                          </div>
+                        </div>
+
+                        <a
+                          href={pr.html_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-start text-lg font-medium text-blue-300 hover:text-blue-100 hover:underline transition-colors line-clamp-2"
+                        >
+                          {pr.title}
+                        </a>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <div className="text-gray-400 text-center py-20 bg-gray-900/40 rounded-xl border border-dashed border-gray-800">
+                    <p className="text-xl mb-2">🚀 No contributions found</p>
+                    <p className="text-sm">Try adjusting your filters to see more results.</p>
+                  </div>
+                )
               ) : (
                 <div className="text-gray-300 text-center py-10">
                   Loading...
