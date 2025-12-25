@@ -2,33 +2,26 @@ import { motion } from "framer-motion";
 import conceptify from "@/public/conceptify.png";
 import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
-import { Tab, Tabs } from "@heroui/react";
+import { Tab, Tabs, Select, SelectItem, Avatar } from "@heroui/react";
 import syncmate from "@/public/syncmate.jpeg";
 import racle from "@/public/racle.jpeg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { getPrs } from "../actions";
+import { getPrs, type Tpr } from "../actions";
 
-type Tpr = {
-  title: string;
-  html_url: string;
-  status: string;
-  avatar_url: string;
-  repo_owner: string;
-};
 export default function Projects() {
   const [prsStatus, setPrsStatus] = useState<"loading" | "error" | "fetched">(
     "loading"
   );
   const [prs, setPrs] = useState<Tpr[] | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [ownerFilter, setOwnerFilter] = useState<string>("all");
 
   useEffect(() => {
     (async () => {
       const data = await getPrs();
 
       if (data.ok && data.results) {
-        console.log({ data });
-
         setPrsStatus("fetched");
         setPrs(data.results);
       } else {
@@ -36,6 +29,40 @@ export default function Projects() {
       }
     })();
   }, []);
+
+  const owners = useMemo(() => {
+    if (!prs) return [];
+    const uniqueOwners = new Map<string, { id: string; name: string; avatar: string }>();
+    prs.forEach((pr) => {
+      if (!uniqueOwners.has(pr.repo_owner)) {
+        uniqueOwners.set(pr.repo_owner, {
+          id: pr.repo_owner,
+          name: pr.repo_owner,
+          avatar: pr.avatar_url,
+        });
+      }
+    });
+    return [
+      { id: "all", name: "All Organizations", avatar: "" },
+      ...Array.from(uniqueOwners.values()),
+    ];
+  }, [prs]);
+
+  const filteredPrs = useMemo(() => {
+    if (!prs) return [];
+    return prs.filter((pr) => {
+      const statusMatch = statusFilter === "all" || pr.status === statusFilter;
+      const ownerMatch = ownerFilter === "all" || pr.repo_owner === ownerFilter;
+      return statusMatch && ownerMatch;
+    });
+  }, [prs, statusFilter, ownerFilter]);
+
+  const statuses = [
+    { id: "Open", name: "🟡 Open" },
+    { id: "Merged", name: "✅ Merged" },
+    { id: "Closed", name: "🔒 Closed" },
+    { id: "all", name: "All Statuses" },
+  ];
 
   const projects = [
     {
@@ -139,6 +166,7 @@ export default function Projects() {
                     <img
                       src={project.image}
                       className="w-full h-48 object-cover"
+                      alt={project.title}
                     />
                     <div className="p-6 flex flex-col justify-between grow">
                       <div>
@@ -182,6 +210,73 @@ export default function Projects() {
             </Tab>
 
             <Tab key="prs" title="Open Source">
+              <div className="flex flex-col md:flex-row gap-4 mb-8 justify-center items-center">
+                <Select
+                  className="max-w-xs"
+                  label="Status"
+                  placeholder="All Statuses"
+                  variant="bordered"
+                  selectedKeys={new Set([statusFilter])}
+                  onSelectionChange={(keys) => {
+                    const val = Array.from(keys)[0] as string;
+                    setStatusFilter(val || "all");
+                  }}
+                  classNames={{
+                    label: "text-white/70",
+                    trigger: "bg-gray-900/50 border-gray-700 text-white hover:border-blue-500/50 transition-colors",
+                    value: "text-white",
+                    popoverContent: "bg-gray-900 border-gray-700",
+                  }}
+                >
+                  {statuses.map((s) => (
+                    <SelectItem key={s.id} textValue={s.name}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </Select>
+
+                <Select
+                  className="max-w-xs"
+                  label="Organization"
+                  placeholder="All Organizations"
+                  variant="bordered"
+                  items={owners}
+                  selectedKeys={new Set([ownerFilter])}
+                  onSelectionChange={(keys) => {
+                    const val = Array.from(keys)[0] as string;
+                    setOwnerFilter(val || "all");
+                  }}
+                  classNames={{
+                    label: "text-white/70",
+                    trigger: "bg-gray-900/50 border-gray-700 text-white hover:border-blue-500/50 transition-colors",
+                    value: "text-white",
+                    popoverContent: "bg-gray-900 border-gray-700",
+                    listboxWrapper: "max-h-[400px]",
+                  }}
+                  renderValue={(items) => {
+                    return items.map((item) => (
+                      <div key={item.key} className="flex items-center gap-2">
+                        {item.data && item.data.avatar ? (
+                          <Avatar alt={item.data.name} className="shrink-0 w-5 h-5" src={item.data.avatar} />
+                        ) : null}
+                        <span>{item.data?.name || "All Organizations"}</span>
+                      </div>
+                    ));
+                  }}
+                >
+                  {(owner) => (
+                    <SelectItem key={owner.id} textValue={owner.name}>
+                      <div className="flex gap-2 items-center">
+                        {owner.avatar && (
+                          <Avatar alt={owner.name} className="shrink-0" size="sm" src={owner.avatar} />
+                        )}
+                        <span className="text-small text-white">{owner.name}</span>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
+              </div>
+
               {prs ? (
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
@@ -190,7 +285,7 @@ export default function Projects() {
                   whileInView="visible"
                   viewport={{ once: true }}
                 >
-                  {prs.map((pr, index) => (
+                  {filteredPrs.map((pr, index) => (
                     <motion.div
                       key={index}
                       className="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 shadow-lg hover:shadow-2xl hover:border-blue-500/40 transition-all duration-300 transform hover:-translate-y-1"
@@ -207,19 +302,18 @@ export default function Projects() {
                             {pr.repo_owner}
                           </p>
                           <p
-                            className={`uppercase w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${
-                              pr.status === "Open"
-                                ? "bg-yellow-500/20 text-yellow-400"
-                                : pr.status === "Merged"
+                            className={`uppercase w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${pr.status === "Open"
+                              ? "bg-yellow-500/20 text-yellow-400"
+                              : pr.status === "Merged"
                                 ? "bg-green-500/20 text-green-400"
                                 : "bg-gray-500/20 text-gray-400"
-                            }`}
+                              }`}
                           >
                             {pr.status === "Open"
                               ? "🟡 Open"
                               : pr.status === "Merged"
-                              ? "✅ Merged"
-                              : "🔒 Closed"}
+                                ? "✅ Merged"
+                                : "🔒 Closed"}
                           </p>
                         </div>
                       </div>

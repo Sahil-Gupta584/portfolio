@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sahil Gupta- Full stack Developer",
+  title: "Sahil Gupta | Full stack Developer",
   description: "I am Full stack developer building scalable web solutions",
   openGraph: {
-    title: "Sahil Supta",
-    description: "Full Stack Developer ",
+    title: "Sahil Gupta",
+    description: "Full Stack Developer",
     url: "https://sahil-alpha.vercel.app/",
     siteName: "Sahil Gupta",
     images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Sahil Gupta",
-    description: "Full stack Developer",
+    description: "Full Stack Developer",
     images: ["https://sahil-alpha.vercel.app/opengraph-image.png"],
   },
 };
@@ -56,11 +56,11 @@ export default function RootLayout({
           src="https://datafa.st/js/script.js"
         ></script>
         <script
-  defer
-  data-website-id="68b3319ddd137064fa17fc36"
-  data-domain="sahil-alpha.vercel.app"
-  src="https://datafa.st/js/script.js">
-</script>
+          defer
+          data-website-id="68b3319ddd137064fa17fc36"
+          data-domain="sahil-alpha.vercel.app"
+          src="https://datafa.st/js/script.js">
+        </script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Navbar />
