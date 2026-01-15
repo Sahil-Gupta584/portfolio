@@ -49,18 +49,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
-        <script
-          defer
-          data-website-id="68b2b53e2a27f4324ee0b55a"
-          data-domain="sahil.appwrite.network"
-          src="https://datafa.st/js/script.js"
-        ></script>
-        <script
-          defer
-          data-website-id="68b3319ddd137064fa17fc36"
-          data-domain="sahil-alpha.vercel.app"
-          src="https://datafa.st/js/script.js">
-        </script>
+       <script
+  defer
+  data-website-id="696910f1002380fbed37"
+  data-domain="sahil-alpha.vercel.app"
+  src="https://localhost:3000/script.js">
+  </script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Navbar />
