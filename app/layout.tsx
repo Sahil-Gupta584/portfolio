@@ -49,12 +49,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
-       <script
-  defer
-  data-website-id="696910f1002380fbed37"
-  data-domain="sahil-alpha.vercel.app"
-  src="https://localhost:3000/script.js">
-  </script>
+        <script
+          defer
+          data-website-id="696910f1002380fbed37"
+          data-domain="sahil-alpha.vercel.app"
+          src="https://www.insightly.live/script.js">
+        </script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Navbar />
