@@ -52,7 +52,7 @@ export default function RootLayout({
         <script
           defer
           data-website-id="696910f1002380fbed37"
-          data-domain="insightly.appwrite.network"
+          data-domain="sahil.appwrite.network"
           src="https://www.insightly.live/script.js">
         </script>
       </head>
