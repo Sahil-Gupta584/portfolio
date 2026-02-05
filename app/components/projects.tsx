@@ -4,7 +4,7 @@ import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
 import { Tab, Tabs, Select, SelectItem, Avatar } from "@heroui/react";
 import syncmate from "@/public/syncmate.jpeg";
-import insightly from "@/public/Insightly.jpeg";
+import insightly from "@/public/Insightly.png";
 import racle from "@/public/racle.jpeg";
 import { useEffect, useState, useMemo } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
