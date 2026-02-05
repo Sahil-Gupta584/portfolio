@@ -71,8 +71,7 @@ export default function Projects() {
       title: "Insighrly",
       category: "SaaS",
       description:
-        "Insightly is web analytics platform, providing revenue attributions for payment providers. It supports live visitors view, embeddable maps and twitter link attributions
-        .",
+        "Insightly is web analytics platform, providing revenue attributions for payment providers. It supports live visitors view, embeddable maps and twitter link attributions.",
       image: insightly.src,
       technologies: ["Appwrite", "Tanstack", "TailwindCSS"],
       githubUrl: "https://github.com/Sahil-Gupta584/tanstack-stat",
