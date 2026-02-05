@@ -4,6 +4,7 @@ import booksmall from "@/public/booksmall.png";
 import pdfkit from "@/public/pdfkit.png";
 import { Tab, Tabs, Select, SelectItem, Avatar } from "@heroui/react";
 import syncmate from "@/public/syncmate.jpeg";
+import insightly from "@/public/Insightly.jpeg";
 import racle from "@/public/racle.jpeg";
 import { useEffect, useState, useMemo } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -72,7 +73,7 @@ export default function Projects() {
       description:
         "Insightly is web analytics platform, providing revenue attributions for payment providers. It supports live visitors view, embeddable maps and twitter link attributions
         .",
-      image: 'https://insightly.live/images/open-graph.png,
+      image: insightly.src,
       technologies: ["Appwrite", "Tanstack", "TailwindCSS"],
       githubUrl: "https://github.com/Sahil-Gupta584/tanstack-stat",
       liveUrl: "https://insightly.live",
