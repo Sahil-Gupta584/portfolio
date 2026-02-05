@@ -67,6 +67,17 @@ export default function Projects() {
 
   const projects = [
     {
+      title: "Insighrly",
+      category: "SaaS",
+      description:
+        "Insightly is web analytics platform, providing revenue attributions for payment providers. It supports live visitors view, embeddable maps and twitter link attributions
+        .",
+      image: 'https://insightly.live/images/open-graph.png,
+      technologies: ["Appwrite", "Tanstack", "TailwindCSS"],
+      githubUrl: "https://github.com/Sahil-Gupta584/tanstack-stat",
+      liveUrl: "https://insightly.live",
+    },
+    {
       title: "Syncmate",
       category: "SaaS",
       description:
