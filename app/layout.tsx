@@ -49,12 +49,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
-        <script
-          defer
-          data-website-id="696910f1002380fbed37"
-          data-domain="sahil.appwrite.network"
-          src="https://www.insightly.live/script.js">
-        </script>
+       <script
+  defer
+  data-website-id="6985fc450023fc01ff69"
+  data-domain="sahil.appwrite.network"
+  src="https://www.insightly.live/script.js">
+  </script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Navbar />
