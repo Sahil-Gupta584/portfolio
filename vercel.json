@@ -2,9 +2,7 @@
     "crons": [
         {
             "path": "/api/prcron",
-            "schedule": 
-            
-            
+            "schedule"       
         }
     ]
 }
