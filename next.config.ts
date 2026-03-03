@@ -2,4 +2,4 @@ import type { NextConfig } from "next";
 
 const nextConfig: onfig  {};
 
-export default nextConfig;
+export default nextCon
