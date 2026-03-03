@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/nav";
 import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "./components/themeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sahil Gupta | Full stack Developer",
-  description: "I am Full stack developer building scalable web solutions",
+  title: "Sahil Gupta | Full Stack Developer",
+  description:
+    "Full stack developer who builds things for the web. Sometimes they even work on the first try.",
   openGraph: {
     title: "Sahil Gupta",
     description: "Full Stack Developer",
@@ -47,18 +49,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-       <script
-  defer
-  data-website-id="6985fc450023fc01ff69"
-  data-domain="sahil.appwrite.network"
-  src="https://www.insightly.live/script.js">
-  </script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})();`,
+          }}
+        />
+        <script
+          defer
+          data-website-id="6985fc450023fc01ff69"
+          data-domain="sahil.appwrite.network"
+          src="https://www.insightly.live/script.js"
+        />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar />
-        {children}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
+      >
+        <ThemeProvider>
+          <Navbar />
+          <main>{children}</main>
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
