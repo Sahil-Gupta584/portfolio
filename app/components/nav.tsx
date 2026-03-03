@@ -1,129 +1,143 @@
-'use client'
+"use client";
+
 import { useState, useEffect } from "react";
 import { useScrollActive } from "../hooks/useScrollActive";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { IoMenu } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
+import { useTheme } from "./themeProvider";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const activeSection = useScrollActive();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); 
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
-
   const navLinks = [
-    { href: "#me", label: "Me" },
+    { href: "#about", label: "About" },
     { href: "#skills", label: "Skills" },
     { href: "#projects", label: "Projects" },
+    { href: "#experience", label: "Experience" },
   ];
 
-  const headerClass = scrolled 
-    ? "glass backdrop-blur-md border-b border-white/10 shadow-lg" 
-    : "bg-transparent";
-
   return (
-    <motion.header 
-      className={`fixed w-full z-50 transition-all duration-300 ${headerClass}`}
+    <motion.header
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-stone-50/80 dark:bg-[#0a0a0b]/80 backdrop-blur-lg border-b border-stone-200/50 dark:border-stone-800/50"
+          : "bg-transparent"
+      }`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-6 py-3">
+      <div className="max-w-5xl mx-auto px-6 py-4">
         <div className="flex justify-between items-center">
-          <div>
-            <a href="#hero" className="font-display text-xl font-semibold text-white group flex items-center">
-              <span className="text-white">
-                Sahil
-              </span>
-              <span className="text-accent mx-0.5">.</span>
-              <span className="text-primary relative font-mono">
-                Code
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary/60 group-hover:w-full transition-all duration-300"></span>
-              </span>
-            </a>
-          </div>
-
-          <nav className="hidden sm:block">
-            <ul className="flex space-x-6">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className={`nav-link text-white/60 hover:text-white transition-all py-1 text-sm ${
-                      activeSection === link.href.substring(1) ? "active text-white" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a 
-                  href="#me" 
-                  className="px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition-colors text-sm"
-                >
-                  Connect me
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <button
-            className="sm:hidden text-white focus:outline-none"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
+          <a
+            href="#"
+            className="text-lg font-semibold text-stone-900 dark:text-stone-100 hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors"
           >
-            {mobileMenuOpen ?<MdClose className="h-[25px] w-[25px]" />:<IoMenu className="h-[25px] w-[25px]"/>}
-          </button>
-        </div>
-      </div>
+            sahil
+            <span className="text-indigo-500 dark:text-indigo-400">.</span>
+          </a>
 
-      {/* Mobile menu */}
-      <motion.div 
-        className={`sm:hidden bg-muted/90 backdrop-blur-md border-b border-white/5 px-5 py-3 ${mobileMenuOpen ? "block" : "hidden"}`}
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ 
-          opacity: mobileMenuOpen ? 1 : 0,
-          height: mobileMenuOpen ? "auto" : 0
-        }}
-        transition={{ duration: 0.3 }}
-      >
-        <ul className="space-y-3">
-          {navLinks.map((link) => (
-            <li key={link.href}>
+          <div className="hidden sm:flex items-center gap-6">
+            {navLinks.map((link) => (
               <a
+                key={link.href}
                 href={link.href}
-                className={`block py-2 text-white/60 hover:text-white transition-colors text-sm ${
-                  activeSection === link.href.substring(1) ? "text-white" : ""
+                className={`text-sm transition-colors ${
+                  activeSection === link.href.substring(1)
+                    ? "text-stone-900 dark:text-stone-100"
+                    : "text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
                 }`}
-                onClick={closeMobileMenu}
               >
                 {link.label}
               </a>
-            </li>
-          ))}
-        </ul>
-      </motion.div>
+            ))}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 transition-all"
+              aria-label="Toggle theme"
+            >
+              <motion.div
+                key={theme}
+                initial={{ scale: 0.5, rotate: -90, opacity: 0 }}
+                animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {theme === "dark" ? (
+                  <FiSun className="w-4 h-4" />
+                ) : (
+                  <FiMoon className="w-4 h-4" />
+                )}
+              </motion.div>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 sm:hidden">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-stone-500 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-all"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <FiSun className="w-4 h-4" />
+              ) : (
+                <FiMoon className="w-4 h-4" />
+              )}
+            </button>
+            <button
+              className="p-2 text-stone-700 dark:text-stone-300"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <MdClose className="w-5 h-5" />
+              ) : (
+                <IoMenu className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="sm:hidden border-t border-stone-200/50 dark:border-stone-800/50 bg-stone-50/95 dark:bg-[#0a0a0b]/95 backdrop-blur-lg"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="px-6 py-4 space-y-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`block text-sm py-1 transition-colors ${
+                    activeSection === link.href.substring(1)
+                      ? "text-stone-900 dark:text-stone-100"
+                      : "text-stone-500 dark:text-stone-400"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
