@@ -68,10 +68,8 @@ export default function Skills() {
 
               {/* Libraries & Frameworks */}
               <div className="flex flex-wrap gap-x-2">
-                <span className="text-[#569CD6]">const</span>
-                <span className="text-[#9CDCFE]">
-                  Libraries &amp; Frameworks
-                </span>
+              <span className="text-[#569CD6]">const</span>
+                <span className="text-[#9CDCFE]">Libraries &amp; Frameworks</span>
                 <span className="text-white">=</span>
                 {[
                   "React",
@@ -89,7 +87,6 @@ export default function Skills() {
                 ].map((lib, i) => (
                   <span key={i}>
                     <span className="text-[#DCDCAA]">{lib}</span>
-                    {i < 11 && <span className="text-white">,</span>}
                   </span>
                 ))}
               </div>

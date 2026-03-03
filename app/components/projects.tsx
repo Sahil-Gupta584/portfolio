@@ -28,13 +28,8 @@ export default function Projects() {
   useEffect(() => {
     (async () => {
       const data = await getPrs();
-
-      if (data.ok && data.results) {
-        setPrsStatus("fetched");
-        setPrs(data.results);
-      } else {
-        setPrsStatus("error");
-      }
+      setPrs(data.results);
+      setPrsStatus("fetched");
     })();
   }, []);
 
@@ -60,8 +55,7 @@ export default function Projects() {
     if (!prs) return [];
     return prs.filter((pr) => {
       const statusMatch = statusFilter === "all" || pr.status === statusFilter;
-      // Case-insensitive matching for robustness
-      const ownerMatch = ownerFilter === "all" || pr.repo_owner.toLowerCase() === ownerFilter.toLowerCase();
+      const ownerMatch = ownerFilter === "all" || pr.repo_owner === ownerFilter;
       return statusMatch && ownerMatch;
     });
   }, [prs, statusFilter, ownerFilter]);

@@ -11,6 +11,15 @@ const experiences = [
       "Delivered 5+ solutions for clients. Completed personal Hospital system, School, Admin Panels in scalable manner with great user interface.",
     techStack: ["Node.js", "Prisma", "trpc", "Vite", "mySQL"],
   },
+  {
+    company: "Acme Corp",
+    companyUrl: "https://acme.com",
+    role: "Junior Developer",
+    duration: "2 Years",
+    description:
+      "Built various web applications and learned React.",
+    techStack: ["JavaScript", "HTML", "CSS"],
+  },
 ];
 
 const containerVariants = {
