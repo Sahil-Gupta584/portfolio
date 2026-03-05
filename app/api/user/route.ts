@@ -10,7 +10,7 @@ export async function GET() {
     console.error("error for /api/user", error);
     return NextResponse.json(
       { status: "error", message: "Failed to create user" },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

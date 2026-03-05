@@ -48,7 +48,7 @@ export default function Hero() {
 
     const typingInterval = setTimeout(typeNextCharacter, typingSpeed);
     return () => clearTimeout(typingInterval);
-  }, [typedText, isDeleting, typingSpeed]);
+  }, [typedText, isDeleting]);
 
   // Cursor blinking effect
   useEffect(() => {
@@ -97,15 +97,6 @@ export default function Hero() {
         duration: Math.floor(Math.random() * 3000) + 2000,
         delay: Math.floor(Math.random() * 2000),
       });
-      const s = {
-        id: `meteor-${Date.now()}-${i}`,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 30}%`,
-        size: Math.floor(Math.random() * 150) + 50,
-        duration: Math.floor(Math.random() * 3000) + 2000,
-        delay: Math.floor(Math.random() * 2000),
-      };
-      newMeteors.push(s);
     }
 
     setMeteors(newMeteors);
