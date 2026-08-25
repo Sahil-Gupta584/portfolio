@@ -1,5 +1,83 @@
+"use client";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import {
+  SiJavascript,
+  SiTypescript,
+  SiPython,
+  SiReact,
+  SiNextdotjs,
+  SiExpress,
+  SiNodedotjs,
+  SiTailwindcss,
+  SiReactquery,
+  SiRedux,
+  SiLangchain,
+  SiPuppeteer,
+  SiMongodb,
+  SiPostgresql,
+  SiRedis,
+  SiPrisma,
+  SiAppwrite,
+  SiGithubactions,
+  SiServerless,
+  SiDocker,
+  SiAmazonwebservices,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
+
+type Tech = {
+  name: string;
+  icon: IconType;
+  color: string;
+};
+
+const skillGroups: { label: string; items: Tech[] }[] = [
+  {
+    label: "Languages",
+    items: [
+      { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+      { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+      { name: "Python", icon: SiPython, color: "#3776AB" },
+    ],
+  },
+  {
+    label: "Libraries & Frameworks",
+    items: [
+      { name: "React", icon: SiReact, color: "#61DAFB" },
+      { name: "NextJS", icon: SiNextdotjs, color: "#111827" },
+      { name: "Express", icon: SiExpress, color: "#111827" },
+      { name: "NodeJs", icon: SiNodedotjs, color: "#339933" },
+      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "React Query", icon: SiReactquery, color: "#FF4154" },
+      { name: "Redux", icon: SiRedux, color: "#764ABC" },
+      { name: "Tanstack", icon: SiReact, color: "#FF4154" },
+      { name: "Langchain", icon: SiLangchain, color: "#1C7C4E" },
+      { name: "Langgraph", icon: SiLangchain, color: "#2563EB" },
+      { name: "Websocket", icon: SiNodedotjs, color: "#6B7280" },
+      { name: "Puppeteer", icon: SiPuppeteer, color: "#40B5A4" },
+    ],
+  },
+  {
+    label: "Databases & ORMs",
+    items: [
+      { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+      { name: "Postgres", icon: SiPostgresql, color: "#4169E1" },
+      { name: "Redis", icon: SiRedis, color: "#DC382D" },
+      { name: "Prisma", icon: SiPrisma, color: "#2D3748" },
+      { name: "Appwrite", icon: SiAppwrite, color: "#F02E65" },
+    ],
+  },
+  {
+    label: "Tools & Platforms",
+    items: [
+      { name: "GitHub Actions", icon: SiGithubactions, color: "#2088FF" },
+      { name: "Serverless", icon: SiServerless, color: "#FD5750" },
+      { name: "Docker", icon: SiDocker, color: "#2496ED" },
+      { name: "AWS", icon: SiAmazonwebservices, color: "#FF9900" },
+    ],
+  },
+];
 
 export default function Skills() {
   const sectionRef = useRef(null);
@@ -8,139 +86,65 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-28 bg-[#0d1117] relative overflow-hidden min-h-screen"
+      className="py-28 relative overflow-hidden aurora-bg"
       ref={sectionRef}
     >
-      {/* Animated glowing background */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10"></div>
+      <div className="aurora-blob aurora-blob--indigo animate-aurora" style={{ width: 320, height: 320, top: "10%", right: "5%" }} />
+      <div className="absolute inset-0 dots-overlay opacity-50 z-0" />
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Heading */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-3">
-            <span className="text-white/70 text-4xl">Skills</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-4">
+            <span className="text-muted-foreground text-sm font-medium">My toolkit</span>
           </div>
-          <div className="h-1 w-20 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-6"></div>
+          <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight">
+            <span className="gradient-text">Skills</span> &amp; Stack
+          </h2>
         </motion.div>
 
-        {/* Code Block Container with styled background */}
-        <div className="backdrop-blur-md bg-black/30 border border-white/10 max-w-4xl mx-auto font-mono shadow-xl text-sm sm:text-xl rounded-lg overflow-hidden relative group hover:border-white/20 transition-all duration-300">
-          {/* Terminal Controls */}
-          <div className="flex items-center gap-1 px-3 py-1.5 bg-white/5 border-b border-white/5">
-            <div className="flex space-x-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-500/40"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/40"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500/40"></div>
-            </div>
-            <span className="ml-2 text-xs sm:text-sm text-white/70">
-              server.ts
-            </span>
-          </div>
-
-          {/* Code Content */}
-          <div className="p-4 leading-relaxed opacity-90">
-            <div className="rounded-md w-fit">
-              <span className="text-[#569CD6]">import</span>{" "}
-              <span className="text-[#9CDCFE]">skills</span>{" "}
-              <span className="text-[#b96161]">from</span>{" "}
-              <span className="text-[#CE9178]">&quot;fullstack.ts&quot;</span>;
-            </div>
-
-            <div className="mt-10 space-y-4 md:space-y-6 w-fit text-sm sm:text-base">
-              {/* Languages */}
-              <div className="flex flex-wrap gap-x-2">
-                <span className="text-[#569CD6]">const</span>
-                <span className="text-[#9CDCFE]">Languages</span>
-                <span className="text-white">=</span>
-                {["Javascript", "Typescript", "Python"].map((lang, i) => (
-                  <span key={i}>
-                    <span className="text-[#DCDCAA]">{lang}</span>
-                    {i < 2 && <span className="text-white">,</span>}
-                  </span>
+        <div className="max-w-4xl mx-auto grid gap-6 sm:grid-cols-2">
+          {skillGroups.map((group, gi) => (
+            <motion.div
+              key={group.label}
+              className="card-glow premium-card p-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.15 + gi * 0.1 }}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-1.5 h-5 rounded-full bg-gradient-to-b from-primary to-accent" />
+                <h3 className="font-display font-semibold text-foreground text-sm">
+                  {group.label}
+                </h3>
+              </div>
+              <div className="flex flex-wrap gap-2.5">
+                {group.items.map((tech, i) => (
+                  <motion.div
+                    key={tech.name}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-background-secondary border border-border/70 hover:border-primary/40 transition-colors group/tech"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: 0.3 + gi * 0.1 + i * 0.04 }}
+                  >
+                    <tech.icon
+                      className="text-base transition-transform group-hover/tech:scale-110"
+                      style={{ color: tech.color }}
+                    />
+                    <span className="text-xs font-medium text-muted-foreground group-hover/tech:text-foreground transition-colors">
+                      {tech.name}
+                    </span>
+                  </motion.div>
                 ))}
               </div>
-
-              {/* Libraries & Frameworks */}
-              <div className="flex flex-wrap gap-x-2">
-                <span className="text-[#569CD6]">const</span>
-                <span className="text-[#9CDCFE]">
-                  Libraries &amp; Frameworks
-                </span>
-                <span className="text-white">=</span>
-                {[
-                  "React",
-                  "NextJS",
-                  "Express",
-                  "NodeJs",
-                  "Tailwind CSS",
-                  "React Query",
-                  "Redux",
-                  "Tanstack",
-                  "Langchain",
-                  "Langraph",
-                  "Websocket",
-                  "Puppeteer",
-                ].map((lib, i) => (
-                  <span key={i}>
-                    <span className="text-[#DCDCAA]">{lib}</span>
-                    {i < 11 && <span className="text-white">,</span>}
-                  </span>
-                ))}
-              </div>
-
-              {/* Databases & ORMs */}
-              <div className="flex flex-wrap gap-x-2">
-                <span className="text-[#569CD6]">const</span>
-                <span className="text-[#9CDCFE]">Databases &amp; ORMs</span>
-                <span className="text-white">=</span>
-                {["MongoDB", "Postgres", "Redis", "Prisma", "Appwrite"].map(
-                  (db, i) => (
-                    <span key={i}>
-                      <span className="text-[#DCDCAA]">{db}</span>
-                      {i < 4 && <span className="text-white">,</span>}
-                    </span>
-                  )
-                )}
-              </div>
-
-              {/* Tools & Platforms */}
-              <div className="flex flex-wrap gap-x-2">
-                <span className="text-[#569CD6]">const</span>
-                <span className="text-[#9CDCFE]">Tools &amp; Platforms</span>
-                <span className="text-white">=</span>
-                {["GitHub Actions", "Serverless", "Docker", "AWS"].map(
-                  (tool, i) => (
-                    <span key={i}>
-                      <span className="text-[#DCDCAA]">{tool}</span>
-                      {i < 7 && <span className="text-white">,</span>}
-                    </span>
-                  )
-                )}
-              </div>
-            </div>
-            <div className="text-sm sm:text-base">
-              <p className="text-green-400 mt-6">{"//"} Start Connection</p>
-              <p className="text-white">
-                <span className="text-[#CE9178]">skills</span>.listen(guptas3067@gmail.com);
-              </p>
-            </div>
-          </div>
-
-          {/* Optional subtle glow on hover */}
-          <div className="absolute inset-0 pointer-events-none rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-xl"></div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-
-// const Languages = Javascript, Typescript, Python
-// const Libraries & Frameworks = React, NextJS, Express, NodeJs, Tailwind CSS, React Query, Redux, Tanstack, Langchain, Langraph, SocketIO, Puppeteer
-// const Databases & ORMs = MongoDB, Postgres, Redis, Prisma, Appwrite
-// const Tools & Platforms = GitHub Actions, Serverless, ESLint, AWS S3, AWS EC2, AWS CloudFront, Azure VM, Docker
