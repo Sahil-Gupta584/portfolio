@@ -8,12 +8,6 @@ import MagneticWrapper from "./magneticWrapper";
 import { IoIosMail } from "react-icons/io";
 import { HiArrowDown } from "react-icons/hi2";
 
-const stats = [
-  { value: "6+", label: "Projects shipped" },
-  { value: "15+", label: "Open-source PRs" },
-  { value: "1yr", label: "Experience" },
-];
-
 export default function Hero() {
   const [typedText, setTypedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
@@ -74,7 +68,7 @@ export default function Hero() {
       <div
         className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
         style={{
-          background: `radial-gradient(600px circle at ${spotlight.x}px ${spotlight.y}px, rgb(99 102 241 / 0.08), transparent 70%)`,
+          background: `radial-gradient(600px circle at ${spotlight.x}px ${spotlight.y}px, rgb(15 118 110 / 0.08), transparent 70%)`,
         }}
       />
 
@@ -155,21 +149,6 @@ export default function Hero() {
             real-time features, I handle it all. Let&apos;s build something that
             works beautifully and delivers real value.
           </motion.p>
-
-          {/* stats */}
-          <motion.div
-            className="flex justify-center lg:justify-start gap-8 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.6 }}
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="text-center lg:text-left">
-                <div className="text-2xl md:text-3xl font-display font-bold gradient-text">{s.value}</div>
-                <div className="text-xs text-muted-foreground mt-0.5">{s.label}</div>
-              </div>
-            ))}
-          </motion.div>
 
           {/* CTAs */}
           <motion.div
