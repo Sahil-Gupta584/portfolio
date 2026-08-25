@@ -72,10 +72,12 @@ export default function Navbar() {
               ))}
               <li>
                 <a
-                  href="#contact"
+                  href="https://x.com/sahil_builds"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-primary px-4 py-1.5 rounded-full text-sm font-medium inline-block"
                 >
-                  Connect me
+                  Connect now
                 </a>
               </li>
             </ul>
@@ -120,11 +122,13 @@ export default function Navbar() {
               ))}
               <li>
                 <a
-                  href="#contact"
+                  href="https://x.com/sahil_builds"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-primary block text-center py-2.5 rounded-full text-sm font-medium"
                   onClick={closeMobileMenu}
                 >
-                  Connect me
+                  Connect now
                 </a>
               </li>
             </ul>

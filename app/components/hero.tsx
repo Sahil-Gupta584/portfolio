@@ -97,22 +97,12 @@ export default function Hero() {
           <MagneticWrapper elasticity={10}>
             <div className="relative magnetic">
               {/* glow ring behind image */}
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/30 via-accent/20 to-pink-500/20 blur-2xl opacity-70" />
+              <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/30 via-accent/20 to-pink-500/20 blur-2xl opacity-70" />
               <img
                 src={twoFingers.src}
                 alt="Sahil Gupta — full stack developer"
-                className="relative rounded-2xl object-cover w-full max-w-sm mx-auto shadow-2xl shadow-primary/20 border border-white/40"
+                className="relative rounded-full object-cover w-full max-w-[280px] mx-auto"
               />
-              {/* floating tech badge */}
-              <motion.div
-                className="absolute -top-5 -right-3 glass-strong rounded-2xl px-3 py-2 shadow-lg flex items-center gap-2"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.5 }}
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-xs font-medium text-foreground">Open to work</span>
-              </motion.div>
             </div>
           </MagneticWrapper>
         </motion.div>

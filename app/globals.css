@@ -173,7 +173,7 @@ body {
    GRADIENT / SHIMMER TEXT
    ============================================================ */
 .gradient-text {
-  background: linear-gradient(120deg, rgb(var(--primary-rgb)), rgb(var(--violet-rgb)), rgb(var(--pink-rgb)), rgb(var(--primary-rgb)));
+  background: linear-gradient(120deg, #4F46E5, #7C3AED, #4F46E5);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -306,44 +306,50 @@ body {
 }
 
 /* ============================================================
-   CUSTOM CURSOR
+   KITE CURSOR
    ============================================================ */
-.cursor-dot {
+.kite-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgb(var(--primary-rgb));
   pointer-events: none;
   z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
-}
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid rgb(var(--primary-rgb) / 0.5);
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-}
-.cursor-ring--active {
-  width: 56px;
-  height: 56px;
-  background: rgb(var(--primary-rgb) / 0.1);
-  border-color: rgb(var(--primary-rgb) / 0.8);
+  overflow: visible;
 }
 
-/* hide custom cursor on touch devices */
+.kite-thread {
+  stroke: rgba(99, 102, 241, 0.4);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-dasharray: 0;
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.kite-shape {
+  filter: drop-shadow(0 1px 3px rgba(79, 70, 229, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.kite-cursor.kite-active .kite-thread {
+  stroke: rgba(124, 58, 237, 0.65);
+  stroke-width: 1.4;
+}
+
+.kite-cursor.kite-active .kite-shape {
+  filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.5));
+}
+
+@media (hover: hover) {
+  body {
+    cursor: none;
+  }
+}
+
+/* hide kite cursor on touch devices */
 @media (hover: none) {
-  .cursor-dot, .cursor-ring { display: none !important; }
+  .kite-cursor {
+    display: none !important;
+  }
 }
 
 /* ============================================================
