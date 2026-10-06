@@ -1,129 +1,63 @@
-'use client'
-import { useState, useEffect } from "react";
+"use client";
+import { useState } from "react";
+import { LuMenu as Menu, LuX as X } from "react-icons/lu";
 import { useScrollActive } from "../hooks/useScrollActive";
-import { motion } from "framer-motion";
-import { IoMenu } from "react-icons/io5";
-import { MdClose } from "react-icons/md";
+
+const navLinks = [
+  { href: "#me", id: "me", label: "Home" },
+  { href: "#skills", id: "skills", label: "Stack" },
+  { href: "#projects", id: "projects", label: "Projects" },
+  { href: "#experience", id: "experience", label: "Experience" },
+  { href: "#contact", id: "contact", label: "Contact" },
+];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const activeSection = useScrollActive();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); 
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
-
-  const navLinks = [
-    { href: "#me", label: "Me" },
-    { href: "#skills", label: "Skills" },
-    { href: "#projects", label: "Projects" },
-  ];
-
-  const headerClass = scrolled 
-    ? "glass backdrop-blur-md border-b border-white/10 shadow-lg" 
-    : "bg-transparent";
+  const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <motion.header 
-      className={`fixed w-full z-50 transition-all duration-300 ${headerClass}`}
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="container mx-auto px-6 py-3">
-        <div className="flex justify-between items-center">
-          <div>
-            <a href="#hero" className="font-display text-xl font-semibold text-white group flex items-center">
-              <span className="text-white">
-                Sahil
-              </span>
-              <span className="text-accent mx-0.5">.</span>
-              <span className="text-primary relative font-mono">
-                Code
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-primary/60 group-hover:w-full transition-all duration-300"></span>
-              </span>
+    <header className="site-header sticky top-0 z-50">
+      <div className="page-shell nav-inner">
+        <a href="#me" className="site-brand" aria-label="Sahil Gupta, home">
+          &lt;sg<span className="brand-accent"> /&gt;</span>
+        </a>
+
+        <nav className="site-nav" aria-label="Main navigation">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              data-active={activeSection === link.id}
+            >
+              {link.label}
             </a>
-          </div>
+          ))}
+        </nav>
 
-          <nav className="hidden sm:block">
-            <ul className="flex space-x-6">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className={`nav-link text-white/60 hover:text-white transition-all py-1 text-sm ${
-                      activeSection === link.href.substring(1) ? "active text-white" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a 
-                  href="#me" 
-                  className="px-3 py-1 bg-primary text-white rounded hover:bg-primary/90 transition-colors text-sm"
-                >
-                  Connect me
-                </a>
-              </li>
-            </ul>
-          </nav>
-
+        <div className="flex items-center gap-1.5">
           <button
-            className="sm:hidden text-white focus:outline-none"
-            onClick={toggleMobileMenu}
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
             aria-label="Toggle mobile menu"
+            aria-expanded={mobileMenuOpen}
+            className="menu-toggle"
           >
-            {mobileMenuOpen ?<MdClose className="h-[25px] w-[25px]" />:<IoMenu className="h-[25px] w-[25px]"/>}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <motion.div 
-        className={`sm:hidden bg-muted/90 backdrop-blur-md border-b border-white/5 px-5 py-3 ${mobileMenuOpen ? "block" : "hidden"}`}
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ 
-          opacity: mobileMenuOpen ? 1 : 0,
-          height: mobileMenuOpen ? "auto" : 0
-        }}
-        transition={{ duration: 0.3 }}
-      >
-        <ul className="space-y-3">
+      <div className="page-shell">
+        <div className="mobile-nav" data-open={mobileMenuOpen}>
           {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`block py-2 text-white/60 hover:text-white transition-colors text-sm ${
-                  activeSection === link.href.substring(1) ? "text-white" : ""
-                }`}
-                onClick={closeMobileMenu}
-              >
-                {link.label}
-              </a>
-            </li>
+            <a key={link.href} href={link.href} onClick={closeMobileMenu}>
+              {link.label}
+            </a>
           ))}
-        </ul>
-      </motion.div>
-    </motion.header>
+        </div>
+      </div>
+    </header>
   );
 }

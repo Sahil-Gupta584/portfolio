@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: onfig  {};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;

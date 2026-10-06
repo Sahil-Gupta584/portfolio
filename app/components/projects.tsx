@@ -1,28 +1,108 @@
 import { motion } from "framer-motion";
-import conceptify from "@/public/conceptify.png";
-import booksmall from "@/public/booksmall.png";
-import pdfkit from "@/public/pdfkit.png";
-import { Tab, Tabs, Select, SelectItem, Avatar } from "@heroui/react";
-import syncmate from "@/public/syncmate.jpeg";
-import insightly from "@/public/Insightly.png";
-import racle from "@/public/racle.jpeg";
+import { Select, SelectItem, Avatar } from "@heroui/react";
 import { useEffect, useState, useMemo } from "react";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { LuArrowUpRight as ArrowUpRight } from "react-icons/lu";
 import { getPrs, type Tpr } from "../actions";
 
 const statuses = [
-  { id: "all", name: "All Statuses" },
   { id: "Open", name: "🟡 Open" },
   { id: "Merged", name: "✅ Merged" },
   { id: "Closed", name: "🔒 Closed" },
 ];
 
+/** Closed PRs are hidden until you opt in — the list starts on live + merged. */
+const DEFAULT_STATUSES = ["Open", "Merged"];
+
+const projects = [
+  {
+    title: "Payo",
+    category: "AI",
+    description:
+      "Payo is standalone mcp powering AI agents to order items from Binkit, Zepto.",
+    image: 'https://www.payo.live/og-image.png',
+    technologies: ["Node.js", "Tanstack", "Solari", "WebScraping"],
+    githubUrl: "https://github.com/Sahil-Gupta584/payo",
+    liveUrl: "https://www.payo.live/",
+  },
+  {
+    title: "Insightly",
+    category: "SaaS",
+    description:
+      "Insightly is web analytics platform, providing revenue attributions for payment providers. It supports live visitors view, embeddable maps and twitter link attributions.",
+    image: "https://www.insightly.live/images/open-graph.png",
+    technologies: ["Appwrite", "Tanstack", "TailwindCSS"],
+    githubUrl: "https://github.com/Sahil-Gupta584/insightly",
+    liveUrl: "https://insightly.live",
+  },
+  {
+    title: "GetBestRide",
+    category: "Tool",
+    description:
+      "GetBestRide is a platform for so user can compare same rides across OLA, Uber and Rapido. Helping user to find our cheapest cab provder for same route. ",
+    technologies: ["WebScraping", "Solari"],
+    githubUrl: "https://github.com/Sahil-Gupta584/getbestride",
+    liveUrl: "https://getbestride.vercel.app/",
+    image: "https://getbestride.vercel.app/og.png",
+  },
+  {
+    title: "OpenCMO",
+    image: "https://www.opencmo.site/og.png",
+    category: "Marketing",
+    description:
+      "OpenCMO is best open-source platform to find out leads for your product. It scans x, reddit for your product, and finds out potential leads. one time setup. You recieve latest leads on few hours of interval in you email. ",
+    technologies: ["RapidAPI", "oRPC",],
+    githubUrl: "https://github.com/Sahil-Gupta584/opencmo",
+    liveUrl: "https://www.opencmo.site",
+  },
+  {
+    title: "Syncmate",
+    category: "SaaS",
+    description:
+      "Syncmate is onestop solution for content creators to manage there multiple youtube channels, video files and editors. ",
+    image: "https://syncmate-web.vercel.app/opengraph-image.png",
+    technologies: ["Postgres", "tRPC", "Aws", "Docker"],
+    githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
+    liveUrl: "https://syncmate-web.vercel.app",
+  },
+  {
+    title: "Racle",
+    category: "Backend",
+    description:
+      "Racle is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
+    image: "https://racle.vercel.app/open-graph.png",
+    technologies: ["tRPC", "Postgres", "Cloudflare", "Docker"],
+    githubUrl: "https://github.com/Sahil-Gupta584/racke",
+    liveUrl: "https://racle.xyz",
+  },
+];
+
+const statusBadge = (status: string) => {
+  if (status === "Open") return "🟡 Open";
+  if (status === "Merged") return "✅ Merged";
+  return "🔒 Closed";
+};
+
+/* HeroUI Select is themed to match the minimal monochrome shell while keeping
+   all existing filter behaviour intact. */
+const selectClasses = {
+  label: "text-[hsl(var(--muted-foreground))] text-[11px] tracking-wide",
+  trigger:
+    "bg-transparent border border-[hsl(var(--border))] text-foreground data-[hover=true]:bg-[hsl(var(--muted))] data-[hover=true]:border-[hsl(var(--border))] transition-colors",
+  value: "text-foreground text-[12px]",
+  popoverContent: "bg-[hsl(var(--popover))] border border-[hsl(var(--border))] shadow-xl",
+  listboxWrapper: "max-h-[400px] p-1",
+  listbox: "bg-transparent",
+  item: "text-foreground text-[12px] data-[hover=true]:bg-[hsl(var(--muted))] data-[hover=true]:text-foreground data-[selected=true]:text-[hsl(var(--primary))]",
+  sectionTitle: "text-[hsl(var(--muted-foreground))]",
+};
+
 export default function Projects() {
+  const [tab, setTab] = useState<"projects" | "prs">("projects");
   const [prsStatus, setPrsStatus] = useState<"loading" | "error" | "fetched">(
     "loading"
   );
   const [prs, setPrs] = useState<Tpr[] | null>(null);
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string[]>(DEFAULT_STATUSES);
   const [ownerFilter, setOwnerFilter] = useState<string>("all");
 
   useEffect(() => {
@@ -59,309 +139,214 @@ export default function Projects() {
   const filteredPrs = useMemo(() => {
     if (!prs) return [];
     return prs.filter((pr) => {
-      const statusMatch = statusFilter === "all" || pr.status === statusFilter;
-      // Case-insensitive matching for robustness
-      const ownerMatch = ownerFilter === "all" || pr.repo_owner.toLowerCase() === ownerFilter.toLowerCase();
+      const statusMatch =
+        statusFilter.length === 0 || statusFilter.includes(pr.status);
+      const ownerMatch =
+        ownerFilter === "all" ||
+        pr.repo_owner.toLowerCase() === ownerFilter.toLowerCase();
       return statusMatch && ownerMatch;
     });
   }, [prs, statusFilter, ownerFilter]);
 
-  const projects = [
-    {
-      title: "Insighrly",
-      category: "SaaS",
-      description:
-        "Insightly is web analytics platform, providing revenue attributions for payment providers. It supports live visitors view, embeddable maps and twitter link attributions.",
-      image: insightly.src,
-      technologies: ["Appwrite", "Tanstack", "TailwindCSS"],
-      githubUrl: "https://github.com/Sahil-Gupta584/tanstack-stat",
-      liveUrl: "https://insightly.live",
-    },
-    {
-      title: "Syncmate",
-      category: "SaaS",
-      description:
-        "Syncmate is onestop solution for content creators to manage there multiple youtube channels, video files and editors. ",
-      image: syncmate.src,
-      technologies: ["Postgres", "tRPC", "Aws", "Docker"],
-      githubUrl: "https://github.com/Sahil-Gupta584/Syncmate",
-      liveUrl: "https://syncmate.xyz",
-    },
-    {
-      title: "Racle",
-      category: "Backend",
-      description:
-        "Racle is a minimalistic Vercel alternative. You can host your react projects for free with auto deployments on commit triggered on you githuh repository.",
-      image: racle.src,
-      technologies: ["tRPC", "Postgres", "Cloudflare", "Docker"],
-      githubUrl: "https://github.com/Sahil-Gupta584/racke",
-      liveUrl: "https://racle.xyz",
-    },
-    {
-      title: "Conceptify",
-      category: "Full Stack",
-      description:
-        "Conceptify is a tool for students where they can generate generate visual diagrams of their notes, ask concepts, short explanation. ",
-      image: conceptify.src,
-      technologies: ["Node.js", "Next.js", "MongoDB", "API"],
-      githubUrl: "https://github.com/Sahil-Gupta584/Conceptify",
-      liveUrl: "https://conceptify-kappa.vercel.app/landing",
-    },
-    {
-      title: "Pdfkit",
-      category: "API",
-      description:
-        "Pdfkit is onestop solution for all of your document related works. ",
-      image: pdfkit.src,
-      technologies: ["ILovePdf API", "Next.js"],
-      githubUrl: "https://github.com/Sahil-Gupta584/pdfkit",
-      liveUrl: "https://pdfkit.vercel.app/",
-    },
-    {
-      title: "Booksmall",
-      category: "Marketplace",
-      description:
-        "Booksmall is marketplace for reader enthusiast where they can buy,read, sell and reapeat quickly with cutting new books cost. ",
-      image: booksmall.src,
-      technologies: ["Mongo", "tRPC", "Websocket"],
-      githubUrl: "https://github.com/Sahil-Gupta584/BooksMall",
-      liveUrl: "https://books-mall.vercel.app",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <section id="projects" className="py-20 min-h-screen animated-gradient">
-      <div className="container mx-auto px-6">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+    <section id="projects" className="page-shell content-section">
+      <div className="section-heading">
+        <p className="code-caption">&lt;!-- projects --&gt;</p>
+        <h2>Selected work</h2>
+      </div>
+
+      <div className="seg-tabs" role="tablist" aria-label="Projects and open source">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "projects"}
+          aria-controls="projects-panel"
+          data-selected={tab === "projects"}
+          onClick={() => setTab("projects")}
         >
-          <Tabs aria-label="Options" className="mb-4 text-xl">
-            <Tab key="projects" title="Projects">
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                {projects.map((project, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex flex-col bg-gray-900/70 backdrop-blur-sm border border-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:border-blue-500/30"
-                    variants={itemVariants}
-                  >
-                    <img
-                      src={project.image}
-                      className="w-full h-48 object-cover"
-                      alt={project.title}
-                    />
-                    <div className="p-6 flex flex-col justify-between grow">
-                      <div>
-                        <div className="flex justify-between items-center mb-3">
-                          <h4 className="text-xl font-semibold text-white">
-                            {project.title}
-                          </h4>
-                          <span className="bg-blue-500/20 text-blue-400 text-xs px-2.5 py-1 rounded-full">
-                            {project.category}
-                          </span>
-                        </div>
-                        <p className="text-gray-400 mb-4 text-sm text-start">
-                          {project.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mb-5">
-                          {project.technologies.map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="bg-gray-800 text-gray-300 text-xs px-2.5 py-1 rounded-full border border-gray-700"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center self-end">
-                        <a
-                          href={project.liveUrl || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-400 gap-2 hover:text-blue-300 hover:underline font-medium flex items-center transition-colors"
-                        >
-                          <span>Visit</span>
-                          <FaExternalLinkAlt />
-                        </a>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </Tab>
+          Projects
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === "prs"}
+          aria-controls="prs-panel"
+          data-selected={tab === "prs"}
+          onClick={() => setTab("prs")}
+        >
+          Open Source
+        </button>
+      </div>
 
-            <Tab key="prs" title="Open Source">
-              <div className="flex flex-col md:flex-row gap-4 mb-8 justify-center items-center">
-                <Select
-                  className="max-w-xs"
-                  label="Status"
-                  placeholder="All Statuses"
-                  variant="bordered"
-                  selectedKeys={new Set([statusFilter])}
-                  disallowEmptySelection
-                  onSelectionChange={(keys) => {
-                    const val = Array.from(keys)[0] as string;
-                    setStatusFilter(val || "all");
-                  }}
-                  classNames={{
-                    label: "text-white/70",
-                    trigger: "bg-gray-900/50 border-gray-700 text-white hover:border-blue-500/50 transition-colors",
-                    value: "text-white",
-                    popoverContent: "bg-gray-900 border-gray-700",
-                  }}
-                >
-                  {statuses.map((s) => (
-                    <SelectItem key={s.id} textValue={s.name}>
-                      {s.name}
-                    </SelectItem>
+      {tab === "projects" ? (
+        <motion.div
+          id="projects-panel"
+          role="tabpanel"
+          className="project-list"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+        >
+          {projects.map((project) => (
+            <article className="project-entry" key={project.title}>
+              <img
+                src={project.image}
+                alt={project.title}
+                width={296}
+                height={192}
+                loading="lazy"
+              />
+              <div>
+                <div className="project-head">
+                  <h3>{project.title}</h3>
+                  <span className="project-category">{project.category}</span>
+                </div>
+                <p className="project-copy">{project.description}</p>
+                <div className="inline-tech" aria-label="Technologies used">
+                  {project.technologies.map((tech) => (
+                    <span className="border p-1" key={tech}>{tech}</span>
                   ))}
-                </Select>
-
-                <Select
-                  className="max-w-xs"
-                  label="Organization"
-                  placeholder="All Organizations"
-                  variant="bordered"
-                  items={owners}
-                  selectedKeys={new Set([ownerFilter])}
-                  disallowEmptySelection
-                  onSelectionChange={(keys) => {
-                    const val = Array.from(keys)[0] as string;
-                    setOwnerFilter(val || "all");
-                  }}
-                  classNames={{
-                    label: "text-white/70",
-                    trigger: "bg-gray-900/50 border-gray-700 text-white hover:border-blue-500/50 transition-colors",
-                    value: "text-white",
-                    popoverContent: "bg-gray-900 border-gray-700",
-                    listboxWrapper: "max-h-[400px]",
-                  }}
-                  renderValue={(items) => {
-                    return items.map((item) => (
-                      <div key={item.key} className="flex items-center gap-2">
-                        {item.data && item.data.avatar ? (
-                          <Avatar alt={item.data.name} className="shrink-0 w-5 h-5" src={item.data.avatar} />
-                        ) : null}
-                        <span>{item.data?.name || "All Organizations"}</span>
-                      </div>
-                    ));
-                  }}
-                >
-                  {(owner) => (
-                    <SelectItem key={owner.id} textValue={owner.name}>
-                      <div className="flex gap-2 items-center">
-                        {owner.avatar && (
-                          <Avatar alt={owner.name} className="shrink-0" size="sm" src={owner.avatar} />
-                        )}
-                        <span className="text-small text-white">{owner.name}</span>
-                      </div>
-                    </SelectItem>
-                  )}
-                </Select>
+                </div>
+                <div className="project-links">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    Live <ArrowUpRight size={13} />
+                  </a>
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                    Source <ArrowUpRight size={13} />
+                  </a>
+                </div>
               </div>
-
-              {prs ? (
-                filteredPrs.length > 0 ? (
-                  <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                  >
-                    {filteredPrs.map((pr, index) => (
-                      <motion.div
-                        key={index}
-                        className="bg-gray-800/70 backdrop-blur-sm border border-gray-700/50 rounded-xl p-5 shadow-lg hover:shadow-2xl hover:border-blue-500/40 transition-all duration-300 transform hover:-translate-y-1"
-                        variants={itemVariants}
-                      >
-                        <div className="flex items-center mb-4">
-                          <img
-                            src={pr.avatar_url}
-                            alt={pr.repo_owner}
-                            className="w-12 h-12 rounded-full mr-4 border border-gray-600 shadow-md"
-                          />
-                          <div>
-                            <p className="font-semibold text-white">
-                              {pr.repo_owner}
-                            </p>
-                            <p
-                              className={`uppercase w-fit items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${pr.status === "Open"
-                                ? "bg-yellow-500/20 text-yellow-400"
-                                : pr.status === "Merged"
-                                  ? "bg-green-500/20 text-green-400"
-                                  : "bg-gray-500/20 text-gray-400"
-                                }`}
-                            >
-                              {pr.status === "Open"
-                                ? "🟡 Open"
-                                : pr.status === "Merged"
-                                  ? "✅ Merged"
-                                  : "🔒 Closed"}
-                            </p>
-                          </div>
-                        </div>
-
-                        <a
-                          href={pr.html_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block text-start text-lg font-medium text-blue-300 hover:text-blue-100 hover:underline transition-colors line-clamp-2"
-                        >
-                          {pr.title}
-                        </a>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                ) : (
-                  <div className="text-gray-400 text-center py-20 bg-gray-900/40 rounded-xl border border-dashed border-gray-800">
-                    <p className="text-xl mb-2">🚀 No contributions found</p>
-                    <p className="text-sm">Try adjusting your filters to see more results.</p>
-                  </div>
-                )
-              ) : (
-                <div className="text-gray-300 text-center py-10">
-                  Loading...
+            </article>
+          ))}
+        </motion.div>
+      ) : (
+        <motion.div
+          id="prs-panel"
+          role="tabpanel"
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+        >
+          <div className="pr-toolbar">
+            <Select
+              aria-label="Status"
+              placeholder="Status"
+              selectionMode="multiple"
+              variant="bordered"
+              size="sm"
+              className="max-w-[220px]"
+              selectedKeys={new Set(statusFilter)}
+              disallowEmptySelection
+              onSelectionChange={(keys) => {
+                const next = Array.from(keys).map(String);
+                setStatusFilter(next.length ? next : DEFAULT_STATUSES);
+              }}
+              classNames={selectClasses}
+              renderValue={(items) => (
+                <div className="flex items-center gap-2">
+                  {items.map((item) => (
+                    <span key={item.key}>
+                      {statuses.find((s) => s.id === item.key)?.name ??
+                        String(item.key)}
+                    </span>
+                  ))}
                 </div>
               )}
-              {prsStatus === "error" && (
-                <p className="text-red-400">Failed to fetch pr&apos;s</p>
+            >
+              {statuses.map((s) => (
+                <SelectItem key={s.id} textValue={s.name}>
+                  {s.name}
+                </SelectItem>
+              ))}
+            </Select>
+
+            <Select
+              aria-label="Organization"
+              placeholder="All Organizations"
+              variant="bordered"
+              size="sm"
+              items={owners}
+              className="max-w-[220px]"
+              selectedKeys={new Set([ownerFilter])}
+              disallowEmptySelection
+              onSelectionChange={(keys) => {
+                const val = Array.from(keys)[0] as string;
+                setOwnerFilter(val || "all");
+              }}
+              classNames={{
+                ...selectClasses,
+                listboxWrapper: "max-h-[400px] p-1",
+              }}
+              renderValue={(items) => {
+                return items.map((item) => (
+                  <div key={item.key} className="flex items-center gap-2">
+                    {item.data && item.data.avatar ? (
+                      <Avatar
+                        alt={item.data.name}
+                        className="shrink-0 w-4 h-4"
+                        src={item.data.avatar}
+                      />
+                    ) : null}
+                    <span>{item.data?.name || "All Organizations"}</span>
+                  </div>
+                ));
+              }}
+            >
+              {(owner) => (
+                <SelectItem key={owner.id} textValue={owner.name}>
+                  <div className="flex gap-2 items-center">
+                    {owner.avatar && (
+                      <Avatar alt={owner.name} className="shrink-0" size="sm" src={owner.avatar} />
+                    )}
+                    <span className="text-[12px] text-foreground">{owner.name}</span>
+                  </div>
+                </SelectItem>
               )}
-            </Tab>
-          </Tabs>
+            </Select>
+          </div>
+
+          {prs ? (
+            filteredPrs.length > 0 ? (
+              <div className="pr-list">
+                {filteredPrs.map((pr, index) => (
+                  <div className="pr-row" key={`${pr.html_url}-${index}`}>
+                    {/* Avatars come from an arbitrary remote host at runtime and
+                        are only 30px, so they load straight from GitHub's CDN
+                        rather than through the image optimizer. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={pr.avatar_url} alt={pr.repo_owner} loading="lazy" />
+                    <div className="pr-meta">
+                      <p className="pr-owner">{pr.repo_owner}</p>
+                      <a
+                        href={pr.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pr-title"
+                      >
+                        {pr.title}
+                      </a>
+                    </div>
+                    <span className="pr-status" data-status={pr.status}>
+                      {statusBadge(pr.status)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <p>No contributions found — try adjusting your filters.</p>
+              </div>
+            )
+          ) : (
+            <div className="empty-state">
+              <p>Loading pull requests…</p>
+            </div>
+          )}
+          {prsStatus === "error" && (
+            <p className="empty-state text-destructive">Failed to fetch pr&apos;s</p>
+          )}
         </motion.div>
-      </div>
+      )}
     </section>
   );
 }
