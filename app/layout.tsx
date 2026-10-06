@@ -57,6 +57,13 @@ export default function RootLayout({
   data-domain="sahil.appwrite.network"
   src="https://www.insightly.live/script.js">
   </script>
+  <script
+    src="https://cdn.databuddy.cc/databuddy.js"
+    data-client-id="y8WiS20cAHdsThlpjtNWb"
+    data-track-web-vitals="true"
+    crossOrigin="anonymous"
+    async
+  ></script>
       </head>
       <body className={`${manrope.variable} ${dmMono.variable}`}>
         <Navbar />
