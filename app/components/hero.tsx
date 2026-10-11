@@ -101,6 +101,9 @@ export default function Hero() {
 
               I take full end to end ownership of the product and work on it with full dedication.
             </li>
+            <li>
+                You can judge my agency by observing my projects and my engineering by OSS contributions.
+            </li>
 
           </ul>
           <a href="#contact" className="text-link reveal reveal-delay-2">

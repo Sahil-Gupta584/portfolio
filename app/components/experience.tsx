@@ -4,7 +4,7 @@ import { Link } from "@heroui/react";
 const experiences = [
   {
     company: "Amphet",
-    companyUrl: "https://amphet.co",
+    companyUrl: "https://x.com/amphetco",
     
     role: "Full Stack Developer Intern",
     duration: "3 Months",
