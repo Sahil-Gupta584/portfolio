@@ -15,6 +15,16 @@ const DEFAULT_STATUSES = ["Open", "Merged"];
 
 const projects = [
   {
+    title: "Screenly",
+    category: "App",
+    description:
+      "Screenly is a productivity app helping people to reduce screen time by staking money.",
+    image: 'https://screenly-website.vercel.app/og.png',
+    technologies: ["Node.js", "Tanstack", "Expo"],
+    githubUrl: "https://github.com/Sahil-Gupta584/screenly",
+    liveUrl: "https://screenly-website.vercel.app",
+  },
+  {
     title: "Payo",
     category: "AI",
     description:
