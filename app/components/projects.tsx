@@ -19,7 +19,7 @@ const projects = [
     category: "App",
     description:
       "Screenly is a productivity app helping people to reduce screen time by staking money.",
-    image: 'https://screenly-website.vercel.app/og.png',
+    image: 'https://screenly-website.vercel.app/images/og.png',
     technologies: ["Node.js", "Tanstack", "Expo"],
     githubUrl: "https://github.com/Sahil-Gupta584/screenly",
     liveUrl: "https://screenly-website.vercel.app",
